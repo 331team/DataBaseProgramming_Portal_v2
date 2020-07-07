@@ -36,7 +36,3 @@ CREATE TABLE Teach(
 	PRIMARY KEY (year, semester, courseNo, classNo),
 	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Course (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-DROP TABLE UserInfo;
-DROP TABLE Course;
-DROP TABLE Teach;
