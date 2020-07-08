@@ -7,8 +7,6 @@ CREATE TABLE UserInfo(
 	PRIMARY KEY (usrID)
 );
 
-INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', 1715437);
-
 CREATE TABLE Course(
 	category INT(1),
 	major VARCHAR(30),
@@ -36,3 +34,4 @@ CREATE TABLE Teach(
 	PRIMARY KEY (year, semester, courseNo, classNo),
 	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Course (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
