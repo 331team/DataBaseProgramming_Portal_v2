@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>index</title>
+<title>Insert title here</title>
 </head>
 <body>
-<%@ include file="top.jsp" %>
-
 
 </body>
 </html>

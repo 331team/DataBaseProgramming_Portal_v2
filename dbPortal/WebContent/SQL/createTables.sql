@@ -8,6 +8,7 @@ CREATE TABLE UserInfo(
 );
 
 INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', 1715437);
+SELECT * FROM UserInfo;
 
 CREATE TABLE Course(
 	category INT(1),
