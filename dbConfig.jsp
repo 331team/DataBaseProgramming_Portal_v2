@@ -3,6 +3,6 @@
 <%@ page import="java.sql.*" %>
 <%
 Class.forName("com.mysql.jdbc.Driver");
-String myUrl = "jdbc:mysql://localhost/portaldb";
+String myUrl = "jdbc:mysql://localhost:3306/portaldb";
 Connection conn = DriverManager.getConnection(myUrl, "db17331", "ora");
 %>
