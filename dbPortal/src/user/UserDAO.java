@@ -10,11 +10,11 @@ public class UserDAO {
 		try {
 			Connection conn = DatabaseUtil.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, usrID);
-			pstmt.setString(2, usrPW);
+			pstmt.setInt(5, Integer.parseInt(usrID));
+			pstmt.setString(4, usrPW);
 			pstmt.setString(3, name);
-			pstmt.setString(4, major);
-			pstmt.setInt(5, isStudent);
+			pstmt.setString(2, major);
+			pstmt.setInt(1, isStudent);
 			return pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
