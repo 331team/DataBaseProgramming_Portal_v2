@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <% session.setAttribute("user", null);
-	
 	response.sendRedirect("index.jsp");
 %>
 <!DOCTYPE html>
@@ -12,6 +11,5 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 </body>
 </html>
