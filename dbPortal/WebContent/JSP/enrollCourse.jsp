@@ -30,6 +30,7 @@
 					</thead>
 					<tbody>
 						<% //나중에 sql procedure로 변경가능
+						
 						%>
 						<tr>
 							<td>아</td>
