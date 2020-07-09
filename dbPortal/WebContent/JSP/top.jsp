@@ -23,7 +23,7 @@ boolean isStudent = true;
 			<% } else {
 				isStudent = ((Boolean) session.getAttribute("student")).booleanValue();
 			%>
-				<div class="col-xs-6 col-md-4">로그아웃</div>
+				<div class="col-xs-6 col-md-4"><%= session_id %>님 / <a href="./logout.jsp">로그아웃</a></div>
 			<% } %>
 		</div>
 		<div class="row">
