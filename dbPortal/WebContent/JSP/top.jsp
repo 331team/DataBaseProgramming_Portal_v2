@@ -6,8 +6,13 @@ boolean isStudent = true;
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>숙명여자대학교 수강신청</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 부트스트랩 CSS 추가하기 -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <!-- 커스텀 CSS 추가하기 -->
+    <link rel="stylesheet" href="./css/custom.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
 	<link rel="stylesheet" href="../CSS/custom.css">
@@ -22,7 +27,7 @@ boolean isStudent = true;
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">수강신청</a>
+					<a class="nav-link" href="enrollCourse.jsp">수강신청</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href="index.jsp">시간표</a>
