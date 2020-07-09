@@ -16,7 +16,7 @@
 			<h3>신청한 강의</h3>
 			<table class="table table-striped table-hover">
 				<thead>
-					<tr>
+					<tr class ="bg-primary">
 						<th>과목코드</th>
 						<th>분반</th>
 						<th>과목명</th>
@@ -26,6 +26,13 @@
 						<th>P/F</th>
 					</tr>
 				</thead>
+				<tbody>
+					<% %>
+					<tr>
+						<td>아</td>
+					</tr>
+					<% %>
+				</tbody>
 			</table>
 		</div>
 	
