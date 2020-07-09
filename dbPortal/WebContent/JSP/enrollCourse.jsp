@@ -29,7 +29,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<% %>
+						<% //나중에 sql procedure로 변경가능
+						%>
 						<tr>
 							<td>아</td>
 						</tr>
@@ -45,7 +46,7 @@
 		
 		<div class="col-md-4">
 			<br><br><br>
-			<table class="table table-striped table-hover">
+			<table class="table table-striped">
 						<thead>
 							<tr class="bg-primary">
 								<th>  </th>
