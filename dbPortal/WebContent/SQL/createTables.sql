@@ -37,3 +37,15 @@ CREATE TABLE Teach(
 	PRIMARY KEY (year, semester, courseNo, classNo),
 	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Course (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE Enroll(
+	year INT(4),
+	semester INT(1),
+	courseNo INT(20),
+	classNo INT(2),
+	studentID INT(10),
+	PRIMARY KEY (year, semester, courseNo, classNo),
+	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Course (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
+);
+
