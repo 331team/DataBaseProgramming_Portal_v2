@@ -40,7 +40,7 @@ boolean isStudent = true;
 						<%if(session_id == null){ %>
 							<a class="dropdown-item" href="./login.jsp">로그인</a>
 						<%} %>
-						<a class="dropdown-item" href="#">정보수정</a>
+						<a class="dropdown-item" href="./updateUserInfo.jsp">정보수정</a>
 						<% if(session_id !=null){ %>
 							<a class="dropdown-item" href="./logout.jsp">로그아웃</a>
 						<%} %>
