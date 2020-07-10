@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="top.jsp" %>
 <%@ page import="user.UserDAO" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList" %>
 <%

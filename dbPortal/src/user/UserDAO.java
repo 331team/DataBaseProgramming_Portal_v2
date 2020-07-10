@@ -58,7 +58,6 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, usrPW);
 			pstmt.setInt(2, usrID);
-			
 			return pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
