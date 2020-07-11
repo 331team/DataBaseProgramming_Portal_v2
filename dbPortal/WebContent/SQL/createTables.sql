@@ -10,6 +10,9 @@ CREATE TABLE UserInfo(
 	name VARCHAR(20),
 	usrPW VARCHAR(30),
 	usrID VARCHAR(10),
+	usrEmail varchar(50),
+	usrEmailHash varchar(64),
+  	usrEmailChecked boolean,
 	PRIMARY KEY (usrID)
 );
 
@@ -46,7 +49,7 @@ CREATE TABLE Enroll(
 	semester INT(1),
 	courseNo INT(20),
 	classNo INT(2),
-	studentID INT(10),
+	studentID VARCHAR(10),
 	PRIMARY KEY (year, semester, courseNo, classNo),
 	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Teach (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
