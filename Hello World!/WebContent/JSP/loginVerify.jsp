@@ -23,7 +23,7 @@
 		return;
 	}
 	UserDAO userDAO = new UserDAO();
-	int result = userDAO.login(Integer.parseInt(usrID), usrPW);
+	int result = userDAO.login(usrID, usrPW);
 	if(result == -1) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -32,7 +32,7 @@
 		script.println("</script>");
 		script.close();
 	} 
-	session.setAttribute("user", usrID);
+	session.setAttribute("usrID", usrID);
 	if(result == 0){
 		session.setAttribute("student", Boolean.TRUE);
 	} else {

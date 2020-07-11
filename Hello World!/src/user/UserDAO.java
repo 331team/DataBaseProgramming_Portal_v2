@@ -10,7 +10,7 @@ public class UserDAO {
 		try {
 			Connection conn = DatabaseUtil.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(5, Integer.parseInt(usrID));
+			pstmt.setString(5, usrID);
 			pstmt.setString(4, usrPW);
 			pstmt.setString(3, name);
 			pstmt.setString(2, major);
@@ -22,7 +22,7 @@ public class UserDAO {
 		return -1;
 	}
 	
-	public int login(int usrID, String usrPW) {
+	public int login(String usrID, String usrPW) {
 		String SQL = "SELECT usrID, isStudent FROM UserInfo WHERE usrID = ? && usrPW = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -30,7 +30,7 @@ public class UserDAO {
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, usrID);
+			pstmt.setString(1, usrID);
 			pstmt.setString(2, usrPW);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
