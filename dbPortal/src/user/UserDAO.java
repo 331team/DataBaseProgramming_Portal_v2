@@ -23,7 +23,7 @@ public class UserDAO {
 		return -1;
 	}
 	
-	public int login(int usrID, String usrPW) {
+	public int login(String usrID, String usrPW) {
 		String SQL = "SELECT usrID, isStudent FROM UserInfo WHERE usrID = ? && usrPW = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -31,7 +31,7 @@ public class UserDAO {
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, usrID);
+			pstmt.setString(1, usrID);
 			pstmt.setString(2, usrPW);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -49,7 +49,7 @@ public class UserDAO {
 		return -1;
 	}
 	
-	public int update(int usrID, String usrPW) {
+	public int update(String usrID, String usrPW) {
 		String SQL = "UPDATE UserInfo SET usrPW=? WHERE usrID=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -57,7 +57,7 @@ public class UserDAO {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, usrPW);
-			pstmt.setInt(2, usrID);
+			pstmt.setString(2, usrID);
 			return pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class UserDAO {
 		return -1;
 	}
 	
-	public ArrayList<String> getInfo(int usrID) {
+	public ArrayList<String> getInfo(String usrID) {
 		ArrayList<String> user = new ArrayList<String>();
 		String SQL = "SELECT * FROM UserInfo WHERE usrID = ?";
 		Connection conn = null;
@@ -78,7 +78,7 @@ public class UserDAO {
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, usrID);
+			pstmt.setString(1, usrID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				user.add(rs.getString(3));

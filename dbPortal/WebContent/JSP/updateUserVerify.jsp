@@ -19,7 +19,7 @@
 		return;
 	}
 	UserDAO userDAO = new UserDAO();
-	int result = userDAO.update(Integer.parseInt(session_id), usrPW);
+	int result = userDAO.update(session_id, usrPW);
 	if(result == -1) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");

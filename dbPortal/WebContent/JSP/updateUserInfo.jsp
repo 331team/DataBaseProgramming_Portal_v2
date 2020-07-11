@@ -10,7 +10,7 @@
 	String major = null;
 	String password = null;
 	UserDAO userDAO = new UserDAO();
-	ArrayList<String> result = userDAO.getInfo(Integer.parseInt(session_id));
+	ArrayList<String> result = userDAO.getInfo(session_id);
 	if(result != null){
 		name = result.get(0);
 		major = result.get(1);

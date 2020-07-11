@@ -23,7 +23,7 @@
 		return;
 	}
 	UserDAO userDAO = new UserDAO();
-	int result = userDAO.login(Integer.parseInt(usrID), usrPW);
+	int result = userDAO.login(usrID, usrPW);
 	if(result == -1) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");

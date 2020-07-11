@@ -1,13 +1,19 @@
+
+DROP TABLE Enroll;
+DROP TABLE Teach;
+DROP TABLE Course;
+DROP TABLE UserInfo;
+
 CREATE TABLE UserInfo(
-	isStudent INT(1),
+	isStudent INT(1) DEFAULT 0,
 	major VARCHAR(30),
 	name VARCHAR(20),
 	usrPW VARCHAR(30),
-	usrID INT(10),
+	usrID VARCHAR(10),
 	PRIMARY KEY (usrID)
 );
 
-INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', 1715437);
+INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', '1715437');
 SELECT * FROM UserInfo;
 
 CREATE TABLE Course(
@@ -20,10 +26,6 @@ CREATE TABLE Course(
 	courseNo INT(20),
 	PRIMARY KEY (courseNo)
 );
-
-DROP TABLE Course;
-DROP TABLE Teach;
-DROP TABLE Enroll;
 
 CREATE TABLE Teach(
 	prof INT(10) REFERENCES UserInfo (usrID),
