@@ -18,6 +18,7 @@ CREATE TABLE UserInfo(
 
 INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', '1715437');
 SELECT * FROM UserInfo;
+DELETE FROM UserInfo WHERE usrID = '1715437';
 
 CREATE TABLE Course(
 	category INT(1),
@@ -28,7 +29,7 @@ CREATE TABLE Course(
 	courseName VARCHAR(30),
 	courseNo INT(20),
 	PRIMARY KEY (courseNo)
-);
+); 
 
 CREATE TABLE Teach(
 	prof INT(10) REFERENCES UserInfo (usrID),
@@ -55,3 +56,19 @@ CREATE TABLE Enroll(
 	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
 );
 
+CREATE TABLE Evaluation(
+	evaluationID int PRIMARY KEY AUTO_INCREMENT,
+	usrID VARCHAR(10),
+	courseName VARCHAR(30),
+	professorName VARCHAR(10),
+	year INT(4),
+	semester INT(1),
+	category INT(1),
+	evaluationTitle VARCHAR(50),
+	evaluationContent VARCHAR(2048),
+	totalScore VARCHAR(10),
+	creditScore VARCHAR(10),
+	homeworkScore VARCHAR(10),
+	lectureScore VARCHAR(10),
+	likeCount INT
+);

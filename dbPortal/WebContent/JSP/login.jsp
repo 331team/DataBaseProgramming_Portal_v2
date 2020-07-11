@@ -11,12 +11,12 @@
 	<section class="container mt-3" style="max-width:560px;">
 	<form method="post" action="./loginVerify.jsp">
 		<div class="form-group">
-			<label for="inputEmail3">학  번</label>
-			<input type="text" class="form-control" id="inputEmail3" name="usrID" placeholder="ID Number">
+			<label for="inputEmail">아이디</label>
+			<input type="text" class="form-control" id="inputEmail" name="usrID" placeholder="ID">
 		</div>
 		<div class="form-group">
-			<label for="inputPassword3" >비밀번호</label>
-			<input type="password" class="form-control" id="inputPassword3" name="usrPW" placeholder="Password">
+			<label for="inputPassword" >비밀번호</label>
+			<input type="password" class="form-control" id="inputPassword" name="usrPW" placeholder="Password">
 		</div>
 	  	<div class="form-group"> 
 			<button type="submit" class="btn btn-default">Sign in</button>

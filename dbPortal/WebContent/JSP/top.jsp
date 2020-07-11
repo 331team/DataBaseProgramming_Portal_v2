@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <% String session_id = (String)session.getAttribute("user");
 boolean isStudent = true;
+String url = "http://localhost:8020/dbPortal/JSP/";
 %>
 <!DOCTYPE html>
 <html>
@@ -20,17 +21,17 @@ boolean isStudent = true;
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    	<a class="navbar-brand" href="index.jsp">숙명여자대학교 수강신청</a>
+    	<a class="navbar-brand" href= <%=url + "index.jsp"%>>숙명여자대학교 수강신청</a>
     	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="enrollCourse.jsp">수강신청</a>
+					<a class="nav-link" href= <%=url + "enrollCourse.jsp" %>>수강신청</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">시간표</a>
+					<a class="nav-link" href= <%=url + "index.jsp"%>>시간표</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
@@ -38,12 +39,12 @@ boolean isStudent = true;
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
 						<%if(session_id == null){ %>
-							<a class="dropdown-item" href="./login.jsp">로그인</a>
-							<a class="dropdown-item" href="./login.jsp">회원가입</a>
+							<a class="dropdown-item" href= <%=url + "login.jsp"%>>로그인</a>
+							<a class="dropdown-item" href= <%=url + "userManage/userJoin.jsp"%>>회원가입</a>
 						<%} %>
 						<% if(session_id !=null){ %>
-							<a class="dropdown-item" href="./updateUserInfo.jsp">정보수정</a>
-							<a class="dropdown-item" href="./logout.jsp">로그아웃</a>
+							<a class="dropdown-item" href= <%=url + "userManage/updateUserInfo.jsp"%>>정보수정</a>
+							<a class="dropdown-item" href= <%=url + "logout.jsp"%>>로그아웃</a>
 						<%} %>
 					</div>
 				</li>
