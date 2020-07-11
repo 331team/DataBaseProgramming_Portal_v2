@@ -39,9 +39,10 @@ boolean isStudent = true;
 					<div class="dropdown-menu" aria-labelledby="dropdown">
 						<%if(session_id == null){ %>
 							<a class="dropdown-item" href="./login.jsp">로그인</a>
+							<a class="dropdown-item" href="./login.jsp">회원가입</a>
 						<%} %>
-						<a class="dropdown-item" href="./updateUserInfo.jsp">정보수정</a>
 						<% if(session_id !=null){ %>
+							<a class="dropdown-item" href="./updateUserInfo.jsp">정보수정</a>
 							<a class="dropdown-item" href="./logout.jsp">로그아웃</a>
 						<%} %>
 					</div>
