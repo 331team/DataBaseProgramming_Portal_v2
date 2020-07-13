@@ -49,20 +49,3 @@ CREATE TABLE Enroll(
 	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
 );
 
-CREATE TABLE EVALUATION (
-
-  evaluationID int PRIMARY KEY AUTO_INCREMENT, 
-  usrID varchar(10), 
-  courseName VARCHAR(30), #강의명
-  professorName varchar(10), #교수명
-  year INT(4), #수강 연도
-  semester varchar(20), #수강 학기
-  category varchar(20) #강의 구분
-  evaluationTitle varchar(50), #평가 제목
-  evaluationContent varchar(2048), #평가 내용
-  totalScore varchar(10), #종합 점수
-  creditScore varchar(10), #성적 점수
-  homeworkScore varchar(10), #과제 점수
-  lectureScore varchar(10), #강의 점수
-  likeCount int #추천갯수
-);

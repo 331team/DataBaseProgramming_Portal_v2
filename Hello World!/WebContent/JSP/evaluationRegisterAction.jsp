@@ -8,8 +8,8 @@
 	request.setCharacterEncoding("UTF-8");
 	String usrID = null;
 	
-	if(session.getAttribute("usrID") != null){
-		usrID = (String) session.getAttribute("usrID");
+	if(session.getAttribute("user") != null){
+		usrID = (String) session.getAttribute("user");
 	}
 	
 	if(usrID == null) {
@@ -118,7 +118,7 @@
 			script.println("</script>");
 			script.close();
 		} else {
-			session.setAttribute("usrID", usrID);
+			session.setAttribute("user", usrID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href = 'courseEvaluation.jsp';");

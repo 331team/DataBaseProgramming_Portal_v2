@@ -32,7 +32,7 @@
 		script.println("</script>");
 		script.close();
 	} 
-	session.setAttribute("usrID", usrID);
+	session.setAttribute("user", usrID);
 	if(result == 0){
 		session.setAttribute("student", Boolean.TRUE);
 	} else {

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter"%>
+<%@ page import="user.UserDAO" %>
+<%@ page import="evaluation.EvaluationDAO" %>
+<%@ page import="evaluation.EvaluationDTO" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,49 +13,120 @@
 <title>index</title>
 </head>
 <body>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String category = "전체";
+	String searchType = "최신순";
+	String search = "";
+	int pageNumber = 0;
+	if(request.getParameter("category") != null) {
+		category = request.getParameter("category");
+	}
+	if(request.getParameter("searchType") != null) {
+		searchType = request.getParameter("searchType");
+	}
+	if(request.getParameter("search") != null) {
+		search = request.getParameter("search");
+	}
+	if(request.getParameter("pageNumber") != null) {
+		try{
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		} catch(Exception e){
+			System.out.println("검색 페이지 번호 오류");
+		}
+	}
+		%>
 <%@ include file="top.jsp" %>
 	<section class="container">
 		<form method="get" action="./courseEvaluation.jsp" class="form-inline mt-3">
 			<select name="category" class="form-control mx-1 mt-2">
 				<option value="전체">전체</option>
-				<option value="전공필수">전공필수</option>
-				<option value="전공선택">전공선택</option>
-				<option value="교양">교양</option>
+				<option value="전공필수" <%if(category.equals("전공필수")) out.println("selected");%>>전공필수</option>
+				<option value="전공선택" <%if(category.equals("전공선택")) out.println("selected");%>>전공선택</option>
+				<option value="교양" <%if(category.equals("교양")) out.println("selected");%>>교양</option>
+			</select>
+			<select name="searchType" class="form-control mx-1 mt-2">
+				<option value="최신순" <%if(searchType.equals("최신순")) out.println("selected");%>>최신순</option>
+				<option value="추천순" <%if(searchType.equals("추천순")) out.println("selected");%>>추천순</option>
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
 			<button type = "submit" class = "btn btn-primary mx-1 mt-2">검색</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a>
 			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a>
 		</form>
+<%
+	ArrayList<EvaluationDTO> evaluationList = new ArrayList<EvaluationDTO>();
+	evaluationList = new EvaluationDAO().getList(category, searchType, search, pageNumber);
+	if(evaluationList != null)
+		for(int i = 0; i < evaluationList.size(); i++){
+			if(i == 5) break;
+			EvaluationDTO evaluation = evaluationList.get(i);
+%>		
+		
 		<div class="card bg-light mt-3">
 			<div class="card-header bg-light">
 				<div class="row">
-					<div class="col-8 text-left">컴퓨터개론&nbsp;<small>잽</small></div>
+					<div class="col-8 text-left"><%= evaluation.getCourseName() %>&nbsp;<small><%=evaluation.getProfessorName()%></small></div>
 					<div class="col-4 text-right">
-					종합 <span style="color: red;">A</span>
+					종합 <span style="color: red;"><%= evaluation.getTotalScore() %></span>
 					</div>
 				</div>
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">
-					정말 좋은 강의<small>(2017년 가을)</small>
+					<%= evaluation.getEvaluationTitle() %><small>(<%= evaluation.getYear() %>년 <%= evaluation.getSemester() %>)</small>
 				</h5>
-				<p class="card-text">좋아요</p>
+				<p class="card-text"><%= evaluation.getEvaluationContent() %></p>
 				<div class="row">
 					<div class="col-9 text-left">
-						성적 <span style="color: red;">A</span>
-						과제 <span style="color: red;">A</span>
-						강의 <span style="color: red;">B</span>
-						<span style="color: green;">(추천: 15★)</span>
+						성적 <span style="color: red;"><%= evaluation.getCreditScore() %></span>
+						과제 <span style="color: red;"><%= evaluation.getHomeworkScore() %></span>
+						강의 <span style="color: red;"><%= evaluation.getLectureScore() %></span>
+						<span style="color: green;">(추천: <%= evaluation.getLikeCount() %>★)</span>
 					</div>
 					<div class="col-3 text-right">
-						<a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-						<a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
+						<a onclick="return confirm('추천하시겠습니까?')" href="./evaluationLikeAction.jsp?evaluationID=<%=evaluation.getEvaluationID()%>">추천</a>
+						<a onclick="return confirm('삭제하시겠습니까?')" href="./evaluationDeleteAction.jsp?evaluationID=<%=evaluation.getEvaluationID()%>">삭제</a>
 					</div>
 				</div>
 			</div>
 		</div>
+<%
+}
+%>
 	</section>
+	<ul class="pagination justify-content-center mt-3">
+		<li class="page-item">
+<%
+	if(pageNumber <= 0){
+%>		
+	<a class="page-link disabled">이전</a>
+<%
+	} else {	
+%>
+	<a class="page-link" href="./courseEvaluation.jsp?category=<%=URLEncoder.encode(category, "UTF-8") %>&searchType=
+		<%=URLEncoder.encode(searchType, "UTF-8")%>&search=<%=URLEncoder.encode(search, "UTF-8")%>&pageNumber=
+		<%=pageNumber - 1%>">이전</a>
+<%
+	}
+%>
+		</li>
+		<li>
+<%
+	if(evaluationList.size() < 6){
+%>		
+	<a class="page-link disabled">다음</a>
+<%
+	} else {	
+%>
+	<a class="page-link" href="./courseEvaluation.jsp?category=<%=URLEncoder.encode(category, "UTF-8") %>&searchType=
+		<%=URLEncoder.encode(searchType, "UTF-8")%>&search=<%=URLEncoder.encode(search, "UTF-8")%>&pageNumber=
+		<%=pageNumber + 1%>">다음</a>
+<%
+	}
+%>	
+		</li>
+	</ul>
 	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
     	<div class="modal-dialog">
     		<div class="modal-content">
