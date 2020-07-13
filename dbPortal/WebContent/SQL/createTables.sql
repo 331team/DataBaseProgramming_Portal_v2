@@ -56,21 +56,28 @@ CREATE TABLE Enroll(
 	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
 );
 
-CREATE TABLE Evaluation (
+CREATE TABLE EVALUATION (
 
   evaluationID int PRIMARY KEY AUTO_INCREMENT, 
   usrID varchar(10), 
-  courseName VARCHAR(30), 
-  professorName varchar(10), 
+  courseName VARCHAR(30),
+  professorName varchar(10),
   year INT(4), 
   semester varchar(20),
   category varchar(20),
-  evaluationTitle varchar(50), 
+  evaluationTitle varchar(50),
   evaluationContent varchar(2048),
-  totalScore varchar(10), 
-  creditScore varchar(10), 
-  homeworkScore varchar(10), 
-  lectureScore varchar(10), 
+  totalScore varchar(10),
+  creditScore varchar(10),
+  homeworkScore varchar(10),
+  lectureScore varchar(10),
   likeCount int 
 );
 SELECT * FROM Evaluation;
+DROP TABLE Evaluation;
+
+CREATE TABLE LIKEY(
+	usrID VARCHAR(50),
+	evaluationID INT,
+	usrIP VARCHAR(50)
+);

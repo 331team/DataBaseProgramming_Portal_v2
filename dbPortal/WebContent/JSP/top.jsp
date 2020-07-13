@@ -34,7 +34,7 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 					<a class="nav-link" href= <%=url + "index.jsp"%>>시간표</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="courseEvaluation.jsp">강의평가</a>
+					<a class="nav-link" href=<%= url + "courseEvaluation.jsp"%>>강의평가</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
