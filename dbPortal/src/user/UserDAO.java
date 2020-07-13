@@ -148,5 +148,19 @@ public class UserDAO {
 		}
 		return false; // 데이터베이스 오류
 	}
+	
+	public int leave(String userID, String userPW) {
+		String SQL = "DELETE FROM UserInfo WHERE usrID = ? && usrPW = ?";
+		try {
+			conn = DatabaseUtil.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setString(2, userPW);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 }

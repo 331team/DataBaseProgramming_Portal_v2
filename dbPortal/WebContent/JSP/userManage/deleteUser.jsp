@@ -13,6 +13,28 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
 	<link rel="stylesheet" href="../CSS/custom.css">
+	
+	<script>
+	// 팝업창 종료시점 감지하기
+	var g_oWindow = null;
+	var g_oInterval = null;
+	var popup = function() {
+	    g_oWindow = window.open('url입력', '창제목');
+	    // 0.5초 마다 감지
+	    g_oInterval = window.setInterval(function() {
+	        try {
+	            // 창이 꺼졌는지 판단
+	            if( g_oWindow == null || g_oWindow.closed ) {
+	                window.clearInterval(g_oInterval);
+	                g_oWindow = null;
+	                // Todo....
+	                //.....
+	                alert('창 close');
+	            }
+	        } catch (e) { }
+	    }, 500);
+	};
+	</script>
 </head>
 <body>
 	<section class="container mt-3" style="max-width:560px;">
