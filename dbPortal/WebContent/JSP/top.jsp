@@ -28,7 +28,7 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href= <%=url + "enrollCourse.jsp" %>>수강신청</a>
+					<a class="nav-link" href= <%=url + "courseTimetable/enrollCourse.jsp" %>>수강신청</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href= <%=url + "index.jsp"%>>시간표</a>

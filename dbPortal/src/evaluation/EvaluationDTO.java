@@ -100,10 +100,7 @@ public class EvaluationDTO {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
-	
-	public EvaluationDTO() {
-		
-	}
+
 	public EvaluationDTO(int evaluationID, String usrID, String courseName, String professorName, int year,
 			String semester, String category, String evaluationTitle, String evaluationContent, String totalScore,
 			String creditScore, String homeworkScore, String lectureScore, int likeCount) {
