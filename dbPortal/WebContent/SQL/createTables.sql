@@ -20,6 +20,11 @@ INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', '1
 SELECT * FROM UserInfo;
 DELETE FROM UserInfo WHERE usrID = '1715437';
 
+INSERT INTO UserInfo VALUES (1, '', '관리자', '1111', '1111' , 'va', 'va', 0);
+INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '이나경', '0000', '1712782' , 'va', 'va', 0);
+INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', '1715437');
+
+
 CREATE TABLE Course(
 	category VARCHAR(20),
 	major VARCHAR(30),
