@@ -41,7 +41,6 @@
 							
 							if(courseList != null)
 								for(int i = 0; i < courseList.size(); i++){
-									if(i == 5) break;
 									CourseDTO course = courseList.get(i);
 									String day = course.getDay();
 									String startTime = course.getStartTime();

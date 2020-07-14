@@ -11,7 +11,7 @@ import util.DatabaseUtil;
 public class CourseDAO {
 	public ArrayList<CourseDTO> enrolled(String usrID, int year, int semester){
 		ArrayList<CourseDTO> enrolledList = null;
-		String SQL = "SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.usrID = Teach.prof AND Enroll.studentID = ? AND Enroll.year = ? AND Enroll.semester = ?";
+		String SQL = "SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.studentID = ? AND Enroll.year = ? AND Enroll.semester = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -31,13 +31,13 @@ public class CourseDAO {
 					rs.getInt(1),
 					rs.getInt(4),
 					rs.getString(5),
-					rs.getInt(11),
+					rs.getString(11),
 					rs.getString(12),
 					rs.getInt(13),
 					rs.getInt(14),
 					rs.getInt(15),
 					rs.getString(16),
-					rs.getString(19),
+					rs.getString(6),
 					rs.getString(7),
 					rs.getString(8),
 					rs.getString(9),
@@ -57,7 +57,7 @@ public class CourseDAO {
 	}
 	public ArrayList<CourseDTO> getCourse(int year, int semester){
 		ArrayList<CourseDTO> enrolledList = null;
-		String SQL = "SELECT * FROM Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.usrID = Teach.prof AND Enroll.year = ? AND Enroll.semester = ?";
+		String SQL = "SELECT * FROM Teach NATURAL JOIN Course WHERE AND Enroll.year = ? AND Enroll.semester = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

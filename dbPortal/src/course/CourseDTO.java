@@ -6,7 +6,7 @@ public class CourseDTO {
 	int courseNo; 
 	int classNo; 
 	String studentID;
-	int category; 
+	String category; 
 	String major; 
 	int credit; 
 	int PF; 
@@ -18,7 +18,7 @@ public class CourseDTO {
 	String startTime; 
 	String endTime;
 	public CourseDTO(int year, int semester, int courseNo, int classNo, String studentID, 
-			int category, String major, int credit, int PF, int cyber, String courseName, 
+			String category, String major, int credit, int PF, int cyber, String courseName, 
 			String prof, String room, String day, String startTime, String endTime){
 		this.year = year;
 		this.semester =  semester;
@@ -59,7 +59,7 @@ public class CourseDTO {
 		return studentID;
 	}
 	
-	public int getCategory() {
+	public String getCategory() {
 		return category;
 	}
 	

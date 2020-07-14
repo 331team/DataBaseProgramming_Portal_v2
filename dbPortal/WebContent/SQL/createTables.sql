@@ -21,7 +21,7 @@ SELECT * FROM UserInfo;
 DELETE FROM UserInfo WHERE usrID = '1715437';
 
 CREATE TABLE Course(
-	category INT(1),
+	category VARCHAR(20),
 	major VARCHAR(30),
 	credit INT(1),
 	PF INT(1),
@@ -84,14 +84,18 @@ CREATE TABLE LIKEY(
 
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.name = Teach.prof AND Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1
 INSERT INTO UserInfo VALUES (1, '컴퓨터과학전공', '이현자', '0000', '17654', 'a', 'a', true);
-INSERT INTO Course VALUES (0, '컴퓨터과학전공', 3, 0, 0, '프로그래밍개론', 204852);
-INSERT INTO Teach VALUES ('17654', '명신 413', '화목', '0900', '1015', 2020, 1, 204852, 1);	
+
+INSERT INTO Course VALUES ('전공선택', '컴퓨터과학전공', 3, 0, 0, '프로그래밍개론', 204852);
+INSERT INTO Teach VALUES ('이기용', '명신 413', '화목', '0900', '1015', 2020, 1, 204852, 1);	
 INSERT INTO Enroll VALUES (2020, 1, 204852, 1, '1715437');
 
-INSERT INTO Course VALUES (0, '컴퓨터과학전공', 3, 1, 0, '소프트웨어인생', 204860);
-INSERT INTO Teach VALUES ('17654', '명신 413', '월수', '0900', '1015', 2020, 1, 204860, 1);	
+INSERT INTO Course VALUES ('전공선택', '컴퓨터과학전공', 3, 1, 0, '소프트웨어인생', 204860);
+INSERT INTO Teach VALUES ('이현자', '명신 413', '월수', '0900', '1015', 2020, 1, 204860, 1);	
 
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.usrID = Teach.prof AND Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1 
 INSERT INTO Enroll VALUES (2020, 1, 204860, 1, '1715437');
 
-
+DELETE FROM Teach;
+SELECT * FROM Enroll;
+SELECT * FROM UserInfo;
+SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String session_id = (String)session.getAttribute("user");
-boolean isStudent = true;
+boolean isStudent = (Boolean)session.getAttribute("student");
 String url = "http://localhost:8020/dbPortal/JSP/";
 %>
 <!DOCTYPE html>
@@ -27,6 +27,7 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 		</button>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="navbar-nav mr-auto">
+			<% if(isStudent){ %>
 				<li class="nav-item active">
 					<a class="nav-link" href= <%=url + "courseTimetable/enrollCourse.jsp" %>>수강신청</a>
 				</li>
@@ -36,6 +37,14 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 				<li class="nav-item active">
 					<a class="nav-link" href=<%= url + "courseEvaluation.jsp"%>>강의평가</a>
 				</li>
+			<% }  else { %>
+				<li class="nav-item active">
+					<a class="nav-link" href= <%=url + "courseTimetable/enrollCourse.jsp" %>>신규강의</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href= <%=url + "index.jsp"%>>강의정보</a>
+				</li>
+			<% } %>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
 						회원 관리
