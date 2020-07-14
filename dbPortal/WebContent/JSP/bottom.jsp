@@ -17,11 +17,6 @@
     <footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
     	Copyright &copy; 2020 심세령 이나경 All Rights Reserved.
     </footer>
-    <!-- 제이쿼리 자바스크립트 추가하기 -->
-    <script src="/dbPortal/JS/jquery.min.js"></script>
-    <!-- Popper 자바스크립트 추가하기 -->
-    <script src="/dbPortal/JS/popper.min.js"></script>
-    <!-- 부트스트랩 자바스크립트 추가하기 -->
-    <script src="/dbPortal/JS/bootstrap.min.js"></script>
+    
 </body>
 </html>

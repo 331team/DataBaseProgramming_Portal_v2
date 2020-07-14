@@ -170,7 +170,7 @@ if(major == null){
 		</div>
 
 	</div>
-	
+	<%@ include file="../bottom.jsp" %>
 	<script src="../../JS/tabMenu.js"></script>
 </body>
 </html>

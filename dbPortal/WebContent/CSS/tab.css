@@ -32,23 +32,3 @@ a:link { color: black; text-decoration: none;}
   color:#df0000;
 }
 
-#logInOut { margin-right: 10%; }
-	
-.wrap_menu {
-	align: center;
-}
-*{
-   font-family: 'Jeju Gothic', sans-serif;
-   position: relative;
-}
-.menu table {
-    border-collapse: collapse;
-  }
-.menu th, td {
-    align: center;
-    padding: 10px;
-    font-family: 'Jeju Gothic', sans-serif;
-  }
- .menu td:hover{
-    background: #4d69b7;  
- }
