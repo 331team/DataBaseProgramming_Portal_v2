@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String session_id = (String)session.getAttribute("user");
-boolean isStudent = (Boolean)session.getAttribute("student");
+Boolean isStudent = true;
+if(session.getAttribute("student")!= null)
+	isStudent = (Boolean)session.getAttribute("student");
 String url = "http://localhost:8020/dbPortal/JSP/";
 %>
 <!DOCTYPE html>
