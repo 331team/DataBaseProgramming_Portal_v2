@@ -20,11 +20,6 @@ INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', '1
 SELECT * FROM UserInfo;
 DELETE FROM UserInfo WHERE usrID = '1715437';
 
-INSERT INTO UserInfo VALUES (1, '', '관리자', '1111', '1111' , 'va', 'va', 0);
-INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '이나경', '0000', '1712782' , 'va', 'va', 0);
-INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '심세령', '0000', '1715437');
-
-
 CREATE TABLE Course(
 	category VARCHAR(20),
 	major VARCHAR(30),
@@ -97,10 +92,19 @@ INSERT INTO Enroll VALUES (2020, 1, 204852, 1, '1715437');
 INSERT INTO Course VALUES ('전공선택', '컴퓨터과학전공', 3, 1, 0, '소프트웨어인생', 204860);
 INSERT INTO Teach VALUES ('이현자', '명신 413', '월수', '0900', '1015', 2020, 1, 204860, 1);	
 
+INSERT INTO Course VALUES ('교양', '컴퓨터과학전공', 3, 1, 0, '왕초보파이썬', 205160);
+INSERT INTO Teach VALUES ('이현자', '명신 305', '월수', '1330', '1445', 2020, 1, 205160, 1);	
+
+
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.usrID = Teach.prof AND Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1 
 INSERT INTO Enroll VALUES (2020, 1, 204860, 1, '1715437');
 
 DELETE FROM Teach;
 SELECT * FROM Enroll;
 SELECT * FROM UserInfo;
+SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.PF = 1
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1
+SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.category LIKE '전공%'
+
+
+

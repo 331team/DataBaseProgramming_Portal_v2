@@ -13,13 +13,8 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- 부트스트랩 CSS 추가하기 -->
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <!-- 커스텀 CSS 추가하기 -->
-    <link rel="stylesheet" href="./css/custom.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
-	<link rel="stylesheet" href="../CSS/custom.css">
-
+    <link rel="stylesheet" href="/dbPortal/CSS/bootstrap.min.css">
+    
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -69,10 +64,12 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 			</form>
 		</div>
     </nav>
-
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
+	<!-- 제이쿼리 자바스크립트 추가하기 -->
+    <script src="/dbPortal/JS/jquery.min.js"></script>
+    <!-- Popper 자바스크립트 추가하기 -->
+    <script src="/dbPortal/JS/popper.min.js"></script>
+    <!-- 부트스트랩 자바스크립트 추가하기 -->
+    <script src="/dbPortal/JS/bootstrap.min.js"></script>
+	
 </body>
 </html>
