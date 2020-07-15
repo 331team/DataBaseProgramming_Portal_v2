@@ -103,4 +103,15 @@ public class CourseDTO {
 		return endTime;
 	}
 	
+	public CourseDTO(String category, String major, int credit, int PF, int cyber, String courseName, int courseNo) {
+		super();
+		this.courseNo = courseNo;
+		this.category = category;
+		this.major = major;
+		this.credit = credit;
+		this.PF = PF;
+		this.cyber = cyber;
+		this.courseName = courseName;
+	}
+	
 }

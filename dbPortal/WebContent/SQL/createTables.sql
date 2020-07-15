@@ -51,7 +51,7 @@ CREATE TABLE Enroll(
 	courseNo INT(20),
 	classNo INT(2),
 	studentID VARCHAR(50),
-	PRIMARY KEY (year, semester, courseNo, classNo),
+	PRIMARY KEY (year, semester, courseNo, classNo, studentID),
 	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Teach (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
 );
@@ -106,5 +106,5 @@ SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semest
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1
 SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.category LIKE '전공%'
 
-
+SELECT * FROM Course LIMIT 10
 

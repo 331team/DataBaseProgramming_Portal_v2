@@ -4,7 +4,7 @@
 Boolean isStudent = true;
 if(session.getAttribute("student")!= null)
 	isStudent = (Boolean)session.getAttribute("student");
-String url = "http://localhost:8020/dbPortal/JSP/";
+String url = "/dbPortal/JSP/";
 %>
 <!DOCTYPE html>
 <html>
@@ -37,10 +37,13 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 				</li>
 			<% }  else { %>
 				<li class="nav-item active">
-					<a class="nav-link" href= <%=url + "courseTimetable/enrollCourse.jsp" %>>신규강의</a>
+					<a class="nav-link" href= <%=url + "insertionCourse.jsp" %>>신규강의</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href= <%=url + "index.jsp"%>>강의정보</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href= <%=url + "userDelete.jsp"%>>회원정보</a>
 				</li>
 			<% } %>
 				<li class="nav-item dropdown">
