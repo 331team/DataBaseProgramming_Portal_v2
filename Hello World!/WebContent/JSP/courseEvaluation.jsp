@@ -1,3 +1,4 @@
+ 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter"%>
@@ -57,6 +58,7 @@
 <%
 	ArrayList<EvaluationDTO> evaluationList = new ArrayList<EvaluationDTO>();
 	evaluationList = new EvaluationDAO().getList(category, searchType, search, pageNumber);
+	
 	if(evaluationList != null)
 		for(int i = 0; i < evaluationList.size(); i++){
 			if(i == 5) break;

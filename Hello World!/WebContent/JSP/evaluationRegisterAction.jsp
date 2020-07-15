@@ -118,7 +118,7 @@
 			script.println("</script>");
 			script.close();
 		} else {
-			session.setAttribute("user", usrID);
+			session.setAttribute("usrID", usrID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href = 'courseEvaluation.jsp';");
