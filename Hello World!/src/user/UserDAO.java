@@ -2,14 +2,14 @@ package user;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.Connection;
 import util.DatabaseUtil;
+import java.util.ArrayList;
 
 public class UserDAO {
 	private Connection conn;
 	private ResultSet rs;
-	
+
 	
 	public int join(String usrID, String usrPW, String name, String major, int isStudent, String email, String emailHash) {
 		String SQL = "INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?, ?, false)";
@@ -34,9 +34,7 @@ public class UserDAO {
 	
 	public int login(String usrID, String usrPW) {
 		String SQL = "SELECT usrID, isStudent FROM UserInfo WHERE usrID = ? && usrPW = ?";
-		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -47,7 +45,7 @@ public class UserDAO {
 				return rs.getInt(2);
 			}
 			return -1;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}

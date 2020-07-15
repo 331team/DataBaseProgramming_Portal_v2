@@ -9,7 +9,7 @@ import util.DatabaseUtil;
 
 public class EvaluationDAO {
 	public int write(EvaluationDTO evaluationDTO) {
-		String SQL = "INSERT INTO EVALUATION VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
+		String SQL = "INSERT INTO Evaluation VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -37,12 +37,12 @@ public class EvaluationDAO {
 			try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
 		}
 		
-		return -1; 
+		return -1; //�����ͺ��̽� ����
 	}
-	
-	public ArrayList<EvaluationDTO> getList (String category, String searchType, String search, int pageNumber){
-		if(category.contentEquals("전체")) {
-			category = "";
+	/*
+	public ArrayList<EvaluationDTO> getList (int category, String searchType, String search, int pageNumber){
+		if(category == 0) {
+			category = 0;
 		}
 		ArrayList<EvaluationDTO> evaluationList = null;
 		String SQL = "";
@@ -50,16 +50,14 @@ public class EvaluationDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 			try {
-				if(searchType.equals("최신순")) {
-					SQL = "SELECT * FROM EVALUATION WHERE category LIKE ? AND CONCAT(courseName, professorName, evaluationTitle, evaluationContent) LIKE"+
-							"? ORDER BY evaluationID DESC LIMIT " + pageNumber * 5 + ", " + pageNumber * 5 + 6;
-				} else if(searchType.equals("추천순")) {
-					SQL = "SELECT * FROM EVALUATION WHERE category LIKE ? AND CONCAT(lectureName, professorName, evaluationTitle, evaluationContent) LIKE"+
-							"? ORDER BY likeCount DESC LIMIT " + pageNumber * 5 + ", " + pageNumber * 5 + 6;
+				if(searchType.equals("�ֽż�")) {
+					SQL = "SELECT * FROM EVALUATION WHERE lectureDivide LIKE ? AND CONCAT(lectureName, professorName, evaluationTitle, evaluationContent) LIKE ? ORDER BY evaluationID DESC LIMIT " + pageNumber * 5 + ", " + pageNumber * 5 + 6;
+				} else if(searchType.equals("��õ��")) {
+
+					SQL = "SELECT * FROM EVALUATION WHERE lectureDivide LIKE ? AND CONCAT(lectureName, professorName, evaluationTitle, evaluationContent) LIKE ? ORDER BY likeCount DESC LIMIT " + pageNumber * 5 + ", " + pageNumber * 5 + 6;
 				}
-				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, "%" + category + "%");
+				pstmt.setString(1, "%" + lectureDivide + "%");
 				pstmt.setString(2, "%" + search + "%");
 				rs = pstmt.executeQuery();
 				evaluationList = new ArrayList<EvaluationDTO>();
@@ -90,78 +88,7 @@ public class EvaluationDAO {
 				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
 			}
 			
-		return evaluationList; // 실패하면 null값이 들어가 있을 것
-	}
-	
-	public int like(String evaluationID) {
-		String SQL = "UPDATE EVALUATION SET likeCount = likeCount + 1 WHERE evaluationID = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			conn = DatabaseUtil.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1,Integer.parseInt(evaluationID));
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pstmt != null) pstmt.close();
-				if(conn != null) conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			return -1;
 		}
-		return -1;
-	}
-
-	public int delete(String evaluationID) {
-		String SQL = "DELETE FROM EVALUATION WHERE evaluationID = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			conn = DatabaseUtil.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1,Integer.parseInt(evaluationID));
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pstmt != null) pstmt.close();
-				if(conn != null) conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return -1; //데이터베이스 오류
-	}
-	
-	public String getUserID(String evaluationID) {
-		String SQL = "SELECT usrID FROM EVALUATION WHERE evaluationID = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			conn = DatabaseUtil.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1,Integer.parseInt(evaluationID));
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pstmt != null) pstmt.close();
-				if(conn != null) conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return null; // 강의평가 없음
-	}
+	}*/
 }

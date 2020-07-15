@@ -13,8 +13,15 @@
     <link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
-<%@ include file="top.jsp" %>
 
-<%@ include file="bottom.jsp" %>
+    <footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
+    	Copyright &copy; 2020 심세령 이나경 All Rights Reserved.
+    </footer>
+    <!-- 제이쿼리 자바스크립트 추가하기 -->
+    <script src="./js/jquery.min.js"></script>
+    <!-- Popper 자바스크립트 추가하기 -->
+    <script src="./js/popper.min.js"></script>
+    <!-- 부트스트랩 자바스크립트 추가하기 -->
+    <script src="./js/bootstrap.min.js"></script>
 </body>
 </html>
