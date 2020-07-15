@@ -133,7 +133,7 @@ public class TeachDTO {
 		this.classNo = classNo;
 	}
 	
-	public TeachDTO(int courseNo, String studentID, String prof, String room,
+	public TeachDTO(int courseNo, String prof, String room,
 			String day, String startTime, String endTime,
 			int year, int semester, String category, int classNo,
 			String major, int credit, int PF, int cyber, String courseName ){
