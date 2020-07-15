@@ -29,7 +29,8 @@
 		script.println("</script>");
 		script.close();
 	} else {
-		userDAO.leave(usrID, usrPW);
+		result = userDAO.leave(usrID, usrPW);
+		System.out.println(result);
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('회원탈퇴가 완료되었습니다.');");

@@ -53,7 +53,7 @@ CREATE TABLE Enroll(
 	studentID VARCHAR(50),
 	PRIMARY KEY (year, semester, courseNo, classNo, studentID),
 	FOREIGN KEY (year, semester, courseNo, classNo) REFERENCES Teach (year, semester, courseNo, classNo) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID)
+	FOREIGN KEY (studentID) REFERENCES UserInfo (usrID) ON DELETE CASCADE
 );
 
 CREATE TABLE EVALUATION (
@@ -107,4 +107,7 @@ SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.student
 SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.category LIKE '전공%'
 
 SELECT * FROM Course LIMIT 10
+SELECT * FROM Teach NATURAL JOIN Course LIMIT 10
+
+
 

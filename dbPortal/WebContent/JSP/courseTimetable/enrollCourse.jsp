@@ -5,6 +5,9 @@
 <%@ page import="user.UserDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%
+if(session.getAttribute("user") == null){
+	response.sendRedirect("/dbPortal/JSP/login.jsp");
+} else {
 String selected = request.getParameter("type");
 if(selected == null){
 	selected = "major";
@@ -233,3 +236,4 @@ String majors[] = {"경영학부", "소프트웨어융합전공", "컴퓨터과�
 	<script src="../../JS/tabMenu.js"></script>
 </body>
 </html>
+<% }%>

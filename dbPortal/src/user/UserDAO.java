@@ -150,12 +150,11 @@ public class UserDAO {
 	}
 	
 	public int leave(String userID, String userPW) {
-		String SQL = "DELETE FROM UserInfo WHERE usrID = ? && usrPW = ?";
+		String SQL = "DELETE FROM UserInfo WHERE usrID = ?";
 		try {
 			conn = DatabaseUtil.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
-			pstmt.setString(2, userPW);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
