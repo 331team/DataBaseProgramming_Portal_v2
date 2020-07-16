@@ -30,7 +30,7 @@ String url = "/dbPortal/JSP/";
 					<a class="nav-link" href= <%=url + "courseTimetable/enrollCourse.jsp" %>>수강신청</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href= <%=url + "index.jsp"%>>시간표</a>
+					<a class="nav-link" href= <%=url + "courseTimetable/timeTable.jsp"%>>시간표</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href=<%= url + "courseEvaluation.jsp"%>>강의평가</a>
