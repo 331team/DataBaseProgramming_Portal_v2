@@ -45,7 +45,7 @@ String url = "http://localhost:8020/dbPortal/JSP/";
 					<a class="nav-link" href= <%=url + "insertionCourse.jsp" %>>신규강의</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href= <%=url + "index.jsp"%>>강의정보</a>
+					<a class="nav-link" href= <%=url + "insertionTeach.jsp"%>>강의정보</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href= <%=url + "userDelete.jsp"%>>회원정보</a>

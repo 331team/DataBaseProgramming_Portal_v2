@@ -216,5 +216,20 @@ public class UserDAO {
 		return -1;
 	
 	}
-
+	
+	public String getMajor(String userID) {
+		String SQL = "SELECT major FROM UserInfo WHERE usrID = ?";
+		try {
+			conn = DatabaseUtil.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

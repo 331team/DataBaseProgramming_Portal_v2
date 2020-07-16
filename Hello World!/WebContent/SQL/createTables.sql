@@ -30,7 +30,7 @@ CREATE TABLE Course(
 	PF INT(1),
 	cyber INT(1),
 	courseName VARCHAR(30),
-	courseNo INT(20),
+	courseNo INT(20) AUTO_INCREMENT,
 	PRIMARY KEY (courseNo)
 ); 
 
