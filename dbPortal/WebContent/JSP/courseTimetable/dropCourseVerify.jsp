@@ -18,7 +18,7 @@ if(request.getParameter("semester") != null) {
 	semester = Integer.parseInt(request.getParameter("semester"));
 }
 
-int result = new CourseDAO().delete((String)session.getAttribute("user"), courseNo, classNo, year, semester);
+int result = new CourseDAO().dropCourse((String)session.getAttribute("user"), courseNo, classNo, year, semester);
 if(result == -1) {
 	PrintWriter script = response.getWriter();
 	script.println("<script>");

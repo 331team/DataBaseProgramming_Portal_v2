@@ -1,6 +1,7 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="teach.TeachDAO" %>
+<%@ page import="teach.TeachDTO" %>
 <%@ page import="course.CourseDAO" %>
 <%@ page import="course.CourseDTO" %>
 <%@ page import="java.util.ArrayList" %>
@@ -75,47 +76,55 @@
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">강의번호</th>
-						<th style="background-color: #eeeeee; text-align: center;">강의명</th>
-						<th style="background-color: #eeeeee; text-align: center;">강의구분</th>
-						<th style="background-color: #eeeeee; text-align: center;">주관학과</th>
+						<th style="background-color: #eeeeee; text-align: center;">과목코드</th>
+						<th style="background-color: #eeeeee; text-align: center;">분반</th>
+						<th style="background-color: #eeeeee; text-align: center;">과목명</th>
 						<th style="background-color: #eeeeee; text-align: center;">학점</th>
-						<th style="background-color: #eeeeee; text-align: center;">PF</th>
+						<th style="background-color: #eeeeee; text-align: center;">강의시간</th>
+						<th style="background-color: #eeeeee; text-align: center;">강의실</th>
+						<th style="background-color: #eeeeee; text-align: center;">교수명</th>
 						<th style="background-color: #eeeeee; text-align: center;">사이버</th>
+						<th style="background-color: #eeeeee; text-align: center;">P/F</th>
 						<th style="background-color: #eeeeee; text-align: center;">삭제</th>
-						
-						
 					</tr>
 				</thead>
 				<tbody>
 					<%
-					ArrayList<CourseDTO> courseList = new ArrayList<CourseDTO>();
-					courseList = new CourseDAO().getList();
-						for(int i = 0; i < courseList.size(); i++){
-							CourseDTO course = courseList.get(i);
+					ArrayList<TeachDTO> teachList = new ArrayList<TeachDTO>();
+					teachList = new TeachDAO().getList();
+						for(int i = 0; i < teachList.size(); i++){
+							TeachDTO teach = teachList.get(i);
+							String day = teach.getDay();
+							String startTime = teach.getStartTime();
+							String endTime = teach.getEndTime();
+							String time = day + " " + startTime.substring(0,2) + ":" + startTime.substring(2) + " ~ " + endTime.substring(0,2) + ":" + endTime.substring(2);
 					%>
 					<tr>
-						<td><%= course.getCourseNo() %></td>	
-						<td><%= course.getCourseName() %></td>
-						<td><%= course.getCategory() %></td>
-						<td><%= course.getMajor() %></td>
-						<td><%= course.getCredit() %></td>
+						<td><%=teach.getCourseNo() %></td>
+						<td><%=teach.getClassNo() %></td>
+						<td><%=teach.getCourseName() %></td>
+						<td><%=teach.getCredit() %></td>
+						<td><%=time %></td>
+						<td><%=teach.getRoom() %></td>
+						<td><%=teach.getProf() %></td>
 						<td>
-							<%if(course.getCyber() == 1) { %>
+							<%if(teach.getCyber() == 1) { %>
 								<input type="checkbox" name="cyber" value="online" checked="checked" disabled="disabled"/>
 							<% } else { %>
 								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
 							<% } %>
 						</td>
 						<td>
-							<%if(courseList.get(i).getPF() == 1) { %>
+							<%if(teach.getPF() == 1) { %>
 								<input type="checkbox" name="cyber" value="online" checked="checked" disabled="disabled"/>
 								<% } else { %>
 								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
 							<% } %>
 						</td>
 						<td>
-							<a onclick="return confirm('삭제하시겠습니까?')" href="./insertionDeleteAction.jsp?courseNo=<%=course.getCourseNo()%>">삭제</a>
+							<button class="btn btn-outline-secondary btn-sm">
+							삭제
+							</button>
 						</td>
 					</tr>
 					<%
@@ -157,7 +166,60 @@
 						</div>
 						<div class="form-group">
 							<label>강의명</label>
-							<input type="text" name="courseName" class="form-control" maxlength="20">
+							<select name="category" class="form-control">
+							<%
+								ArrayList<CourseDTO> courseList = new ArrayList<CourseDTO>();
+								courseList = new CourseDAO().getList();
+								for(int i = 0; i < courseList.size(); i++){
+							%>
+									<option value="<%= courseList.get(i).getCourseName() %>"><%= courseList.get(i).getCourseName() %></option>
+							<%
+								}
+							%>
+							</select>
+						</div>
+						<div class="form-group">
+								<label>요일</label>
+								<br>
+								<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="class_day" id="day" value="mon"><label>월</label>
+	               				</div>
+	               				<div class="form-check form-check-inline">
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="tue"><label>화 </label>
+	               				</div>
+	               				<div class="form-check form-check-inline">
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="wed"><label>수 </label>
+	               				</div>
+	               				<div class="form-check form-check-inline">
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="thu"><label>목 </label>
+	               				</div>
+	               				<div class="form-check form-check-inline">
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="fri"><label>금 </label>
+       				        	</div>
+       				        </div>
+       				       <div class="form-row">
+       				        <div class="form-group col-sm-6">
+								<label>장소</label>
+								<select name="room" class="form-control">
+									<option value="명신관">명신관</option>
+									<option value="순헌관">순헌관</option>
+									<option value="과학관">과학관</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-6">
+								<label>시간</label>
+								<table>
+								<td align="center">
+                  <input type="text" name="class_st_h" id="time" style="font-size: 1em; width:25pt;" placeholder="09">
+                  :
+                  <input type="text" name="class_st_m" id="time" style="font-size: 1em; width:25pt;" placeholder="00">
+                  ~
+                  <input type="text" name="class_end_h" id="time" style="font-size: 1em; width:25pt;" placeholder="10">
+                  :
+                  <input type="text" name="class_end_m" id="time" style="font-size: 1em; width:25pt;" placeholder="00">
+            </td> 
+            </table>
+							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-sm-4">

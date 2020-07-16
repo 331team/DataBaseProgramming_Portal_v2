@@ -321,6 +321,7 @@ public class CourseDAO {
 		
 		return exceptEnroll(year, semester, courseList);
 	}
+	
 	public ArrayList<CourseDTO> getList(){
 		ArrayList<CourseDTO> courseList = null;
 		String SQL = "";
@@ -360,28 +361,31 @@ public class CourseDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {
-			conn = DatabaseUtil.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, courseDTO.getCategory());
-			pstmt.setString(2, courseDTO.getMajor());
-			pstmt.setInt(3, courseDTO.getCredit());
-			pstmt.setInt(4, courseDTO.getCyber());
-			pstmt.setInt(5, courseDTO.getPF());
-			pstmt.setString(6, courseDTO.getCourseName());
-			return pstmt.executeUpdate(); //
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
-			try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
-			try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+		if(check(courseDTO.getCourseName())) {
+			try {
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, courseDTO.getCategory());
+				pstmt.setString(2, courseDTO.getMajor());
+				pstmt.setInt(3, courseDTO.getCredit());
+				pstmt.setInt(4, courseDTO.getCyber());
+				pstmt.setInt(5, courseDTO.getPF());
+				pstmt.setString(6, courseDTO.getCourseName());
+				return pstmt.executeUpdate(); //
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
 		}
-		
+		else
+			return -2;
 		return -1; 
 	}
 	
-	public int delete(String studentID, int courseNo, int classNo, int year, int semester) {
+	public int dropCourse(String studentID, int courseNo, int classNo, int year, int semester) {
 		String SQL = "DELETE FROM Enroll WHERE studentID = ? AND year = ? AND semester = ? AND courseNo = ? AND classNo = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -472,5 +476,50 @@ public class CourseDAO {
 			try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
 		}
 		return -1;
+	}
+	
+	public static boolean check(String courseName) {
+		String SQL = "SELECT courseName FROM Course WHERE courseName = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, courseName);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString(1) != null) {
+					return false;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		};
+		return true;
+	}
+	public int delete(String courseNo) {
+		String SQL = "DELETE FROM Course WHERE courseNo = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,Integer.parseInt(courseNo));
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1; //데이터베이스 오류
 	}
 }

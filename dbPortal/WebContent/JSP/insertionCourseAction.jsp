@@ -90,7 +90,15 @@
 			script.println("history.back();");
 			script.println("</script>");
 			script.close();
-		} else {
+		} 
+		else if(result == -2){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('중복 강의 등록');");
+			script.println("history.back();");
+			script.println("</script>");
+			script.close();
+		}	else {
 			session.setAttribute("usrID", usrID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
