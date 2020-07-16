@@ -80,6 +80,7 @@
 						<th style="background-color: #eeeeee; text-align: center;">분반</th>
 						<th style="background-color: #eeeeee; text-align: center;">과목명</th>
 						<th style="background-color: #eeeeee; text-align: center;">학점</th>
+						<th style="background-color: #eeeeee; text-align: center;">인원</th>
 						<th style="background-color: #eeeeee; text-align: center;">강의시간</th>
 						<th style="background-color: #eeeeee; text-align: center;">강의실</th>
 						<th style="background-color: #eeeeee; text-align: center;">교수명</th>
@@ -104,6 +105,7 @@
 						<td><%=teach.getClassNo() %></td>
 						<td><%=teach.getCourseName() %></td>
 						<td><%=teach.getCredit() %></td>
+						<td><%=teach.getNum() %></td>
 						<td><%=time %></td>
 						<td><%=teach.getRoom() %></td>
 						<td><%=teach.getProf() %></td>
@@ -144,7 +146,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="./insertionCourseAction.jsp" method="post">
+					<form action="./insertionTeachAction.jsp" method="post">
 						<div class="form-row">
 							<div class="form-group col-sm-6">
 								<label>주관 학과</label>
@@ -164,9 +166,10 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-row">
+							<div class="form-group col-sm-6">
 							<label>강의명</label>
-							<select name="category" class="form-control">
+							<select name="courseName" class="form-control">
 							<%
 								ArrayList<CourseDTO> courseList = new ArrayList<CourseDTO>();
 								courseList = new CourseDAO().getList();
@@ -177,6 +180,11 @@
 								}
 							%>
 							</select>
+							</div>
+							<div class="form-group col-sm-6">
+								<label>교수명</label>
+								<input type="text" name="prof" class="form-control" maxlength="20">
+							</div>
 						</div>
 						<div class="form-group">
 								<label>요일</label>
@@ -223,28 +231,25 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group col-sm-4">
-								<label>학점</label>
-								<select name="credit" class="form-control">
-									<option value="1" selected>1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
+								<label>년도</label>
+								<select name="year" class="form-control">
+									<%for(int i=2011; i< 2022; i++){ %>
+									<option value="<%=i%>"><%=i%></option>
+									<%} %>
 								</select>
 							</div>
 							<div class="form-group col-sm-4">
-								<label>PF</label>
-								<select name="PF" class="form-control">
-									<option value="0" selected>X</option>
-									<option value="1">O</option>
+								<label>학기</label>
+								<select name="semester" class="form-control">
+									<option value="1" selected>1학기</option>
+									<option value="2">여름학기</option>
+									<option value="3">2학기</option>
+									<option value="4">겨울학기</option>
 								</select>
 							</div>
 							<div class="form-group col-sm-4">
-								<label>사이버</label>
-								<select name="cyber" class="form-control">
-									<option value="0" selected>X</option>
-									<option value="1">O</option>
-								</select>
+								<label>인원</label>
+								<input type="text" name="num" class="form-control" maxlength="20">
 							</div>
 						</div>
 						<div class="modal-footer">
