@@ -39,17 +39,18 @@ public class CourseDAO {
 					rs.getInt(1),
 					rs.getInt(4),
 					rs.getString(5),
-					rs.getString(11),
 					rs.getString(12),
-					rs.getInt(13),
+					rs.getString(13),
 					rs.getInt(14),
 					rs.getInt(15),
-					rs.getString(16),
+					rs.getInt(16),
+					rs.getString(17),
 					rs.getString(6),
 					rs.getString(7),
 					rs.getString(8),
 					rs.getString(9),
-					rs.getString(10)					
+					rs.getString(10),
+					rs.getInt(11)
 				);
 				enrolledList.add(course);
 			}
@@ -66,16 +67,22 @@ public class CourseDAO {
 	
 	public ArrayList<CourseDTO> exceptEnroll(int year, int semester, ArrayList<CourseDTO> courseList){
 		ArrayList<CourseDTO> enrolledCourse = enrolled(this.usrID, year, semester);
-//		ArrayList<CourseDTO> result = null;
-		for(int i=0;i<enrolledCourse.size();i++) {
-			for(int j=0;j<courseList.size();j++) {
-				if(enrolledCourse.get(i).getCourseNo() == courseList.get(j).getCourseNo()) {
-					courseList.remove(j);
+		ArrayList<CourseDTO> result = new ArrayList<CourseDTO>();
+		if(enrolledCourse.size()==0) {
+			return courseList;
+		}
+		for(int i=0;i<courseList.size();i++) {
+			for(int j=0;j<enrolledCourse.size();j++) {
+				if(enrolledCourse.get(j).getCourseNo() == courseList.get(i).getCourseNo()) {
+					break;
+				} else {
+					if(j == enrolledCourse.size()-1)
+						result.add(courseList.get(i));
 				}
 			}
 		}
 		
-		return courseList;
+		return result;
 	}
 	
 	public ArrayList<CourseDTO> getCourse(int year, int semester){
@@ -99,17 +106,18 @@ public class CourseDAO {
 						rs.getInt(1),
 						rs.getInt(9),
 						null,
-						rs.getString(10),
 						rs.getString(11),
-						rs.getInt(12),
+						rs.getString(12),
 						rs.getInt(13),
 						rs.getInt(14),
-						rs.getString(15),
+						rs.getInt(15),
+						rs.getString(16),
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getString(6)						
+						rs.getString(6),
+						rs.getInt(10)
 				);
 				enrolledList.add(course);
 			}
@@ -125,7 +133,7 @@ public class CourseDAO {
 	}
 	
 	public ArrayList<CourseDTO> getMajorCourse(String major, int year, int semester){
-		ArrayList<CourseDTO> courseList = null;
+		ArrayList<CourseDTO> courseList = new ArrayList<CourseDTO>();
 		String SQL = "SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = ? AND Teach.semester = ? AND Course.category LIKE '전공%' AND Course.major = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -146,17 +154,18 @@ public class CourseDAO {
 						rs.getInt(1),
 						rs.getInt(9),
 						null,
-						rs.getString(10),
 						rs.getString(11),
-						rs.getInt(12),
+						rs.getString(12),
 						rs.getInt(13),
 						rs.getInt(14),
-						rs.getString(15),
+						rs.getInt(15),
+						rs.getString(16),
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getString(6)					
+						rs.getString(6),
+						rs.getInt(10)					
 					);
 					courseList.add(course);
 			}
@@ -169,6 +178,7 @@ public class CourseDAO {
 		}
 		
 		return exceptEnroll(year, semester, courseList);
+		
 	}
 	
 	public ArrayList<CourseDTO> getGenCourse(int year, int semester){
@@ -192,17 +202,18 @@ public class CourseDAO {
 						rs.getInt(1),
 						rs.getInt(9),
 						null,
-						rs.getString(10),
 						rs.getString(11),
-						rs.getInt(12),
+						rs.getString(12),
 						rs.getInt(13),
 						rs.getInt(14),
-						rs.getString(15),
+						rs.getInt(15),
+						rs.getString(16),
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getString(6)						
+						rs.getString(6),
+						rs.getInt(10)					
 					);
 					courseList.add(course);
 			}
@@ -215,6 +226,7 @@ public class CourseDAO {
 		}
 		
 		return exceptEnroll(year, semester, courseList);
+		
 	}
 	
 	public ArrayList<CourseDTO> getPfCourse(int year, int semester){
@@ -238,17 +250,18 @@ public class CourseDAO {
 						rs.getInt(1),
 						rs.getInt(9),
 						null,
-						rs.getString(10),
 						rs.getString(11),
-						rs.getInt(12),
+						rs.getString(12),
 						rs.getInt(13),
 						rs.getInt(14),
-						rs.getString(15),
+						rs.getInt(15),
+						rs.getString(16),
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getString(6)						
+						rs.getString(6),
+						rs.getInt(10)						
 					);
 					courseList.add(course);
 			}
@@ -283,17 +296,18 @@ public class CourseDAO {
 						rs.getInt(1),
 						rs.getInt(9),
 						null,
-						rs.getString(10),
 						rs.getString(11),
-						rs.getInt(12),
+						rs.getString(12),
 						rs.getInt(13),
 						rs.getInt(14),
-						rs.getString(15),
+						rs.getInt(15),
+						rs.getString(16),
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getString(6)						
+						rs.getString(6),
+						rs.getInt(10)						
 					);
 					courseList.add(course);
 			}
@@ -389,10 +403,59 @@ public class CourseDAO {
 		return -1;
 	}
 	
+	// 시간 비교 함수
+	public boolean compareDay(String day1, String day2) {
+		System.out.println(day1);
+		System.out.println(day2);
+		for(int i=0;i<day1.length();i++) {
+			for(int j=0;j<day2.length();j++) {
+				if(day1.charAt(i) == day2.charAt(j)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean compareTime(int startTime1, int endTime1, int startTime2, int endTime2) {
+		if(startTime1 > endTime2 || endTime1 < startTime2)
+			return false;
+		return true;
+	}
+	
 	public int insert(String studentID, int courseNo, int classNo, int year, int semester) {
-		String SQL = "INSERT INTO Enroll (studentID, year, semester, courseNo, classNo) VALUES (?,?,?,?,?)";
+		ArrayList<CourseDTO> enrolledList = enrolled(studentID, year, semester);
+		String SQL2 = "SELECT day, startTime, endTime FROM Teach WHERE courseNo = ? AND classNo = ? AND year = ? AND semester = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String day = null; int startTime = 0, endTime = 0;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL2);
+			pstmt.setInt(1, courseNo);
+			pstmt.setInt(2, classNo);
+			pstmt.setInt(3, year);
+			pstmt.setInt(4, semester);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				day = rs.getString(1);
+				startTime = Integer.parseInt(rs.getString(2));
+				endTime = Integer.parseInt(rs.getString(3));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+			try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+		}
+		for(int i=0;i<enrolledList.size();i++) {
+			if(compareDay(enrolledList.get(i).getDay(), day)) {
+				if(compareTime(Integer.parseInt(enrolledList.get(i).getStartTime()), Integer.parseInt(enrolledList.get(i).getEndTime()), startTime, endTime))
+					return -2;
+			}
+		}
+		
+		String SQL = "INSERT INTO Enroll (studentID, year, semester, courseNo, classNo) VALUES (?,?,?,?,?)";
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);

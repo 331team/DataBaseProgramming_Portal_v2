@@ -141,7 +141,7 @@ String majors[] = {"경영학부", "소프트웨어융합전공", "컴퓨터과�
 					<div class="tab_wrap">
 					  <div class="tab_menu_container">
 					    <a href="enrollCourse.jsp?type=major&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn" id="major">전공</a>
-					    <a href="enrollCourse.jsp?type=gen&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn on" id="gen">교양</a>
+					    <a href="enrollCourse.jsp?type=gen&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn" id="gen">교양</a>
 					    <a href="enrollCourse.jsp?type=pf&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn" id="pf">PF</a>
 					    <a href="enrollCourse.jsp?type=cyber&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn" id="cyber">사이버</a>
 					    <div id="selected" value="<%=selected %>"></div>

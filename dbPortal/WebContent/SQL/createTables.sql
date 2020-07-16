@@ -41,6 +41,7 @@ CREATE TABLE Teach(
 	semester INT(1),
 	courseNo INT(20),
 	classNo INT(2),
+	num INT(3),
 	PRIMARY KEY (year, semester, courseNo, classNo),
 	FOREIGN KEY (courseNo) REFERENCES Course (courseNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -86,20 +87,21 @@ SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo 
 INSERT INTO UserInfo VALUES (1, '컴퓨터과학전공', '이현자', '0000', '17654', 'a', 'a', true);
 
 INSERT INTO Course VALUES ('전공선택', '컴퓨터과학전공', 3, 0, 0, '프로그래밍개론', 204852);
-INSERT INTO Teach VALUES ('이기용', '명신 413', '화목', '0900', '1015', 2020, 1, 204852, 1);	
+INSERT INTO Teach VALUES ('이기용', '명신 413', '화목', '0900', '1015', 2020, 1, 204852, 1, 60);	
 INSERT INTO Enroll VALUES (2020, 1, 204852, 1, '1715437');
 
 INSERT INTO Course VALUES ('전공선택', '컴퓨터과학전공', 3, 1, 0, '소프트웨어인생', 204860);
-INSERT INTO Teach VALUES ('이현자', '명신 413', '월수', '0900', '1015', 2020, 1, 204860, 1);	
+INSERT INTO Teach VALUES ('이현자', '명신 413', '월수', '0900', '1015', 2020, 1, 204860, 1, 50);	
+
+INSERT INTO Teach VALUES ('이기용', '명신 413', '월수', '0900', '1015', 2020, 1, 204860, 2, 50);
 
 INSERT INTO Course VALUES ('교양', '컴퓨터과학전공', 3, 1, 0, '왕초보파이썬', 205160);
-INSERT INTO Teach VALUES ('이현자', '명신 305', '월수', '1330', '1445', 2020, 1, 205160, 1);	
-
+INSERT INTO Teach VALUES ('이현자', '명신 305', '월수', '1330', '1445', 2020, 1, 205160, 1, 100);	
+INSERT INTO Teach VALUES ('최자령', '명신 314', '월수', '0910', '1005', 2020, 1, 204860, 3, 40);
 
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.usrID = Teach.prof AND Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1 
 INSERT INTO Enroll VALUES (2020, 1, 204860, 1, '1715437');
 
-DELETE FROM Teach;
 SELECT * FROM Enroll;
 SELECT * FROM UserInfo;
 SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.PF = 1
@@ -107,7 +109,7 @@ SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.student
 SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.category LIKE '전공%'
 
 SELECT * FROM Course LIMIT 10
-SELECT * FROM Teach NATURAL JOIN Course LIMIT 10
+SELECT * FROM Teach;
 
 
 

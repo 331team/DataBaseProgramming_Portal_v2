@@ -32,7 +32,16 @@ if(result == -1) {
 	script.println("history.back();");
 	script.println("</script>");
 	script.close();
-} else {
+}
+else if(result == -2) {
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('이미 신청한 강의와 시간이 겹칩니다.');");
+	script.println("history.back();");
+	script.println("</script>");
+	script.close();
+}
+else {
 	response.sendRedirect("enrollCourse.jsp?&year=" + year + "&semester=" + semester);
 }
 %>

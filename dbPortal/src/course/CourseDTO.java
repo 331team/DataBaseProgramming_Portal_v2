@@ -17,9 +17,10 @@ public class CourseDTO {
 	String day; 
 	String startTime; 
 	String endTime;
+	int num;
 	public CourseDTO(int year, int semester, int courseNo, int classNo, String studentID, 
 			String category, String major, int credit, int PF, int cyber, String courseName, 
-			String prof, String room, String day, String startTime, String endTime){
+			String prof, String room, String day, String startTime, String endTime, int num){
 		this.year = year;
 		this.semester =  semester;
 		this.courseNo = courseNo;
@@ -36,6 +37,7 @@ public class CourseDTO {
 		this.day = day;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.num = num;
 	}
 	
 	// get/set Info
@@ -101,6 +103,9 @@ public class CourseDTO {
 	
 	public String getEndTime() {
 		return endTime;
+	}
+	public int getNum() {
+		return num;
 	}
 	
 	public CourseDTO(String category, String major, int credit, int PF, int cyber, String courseName, int courseNo) {
