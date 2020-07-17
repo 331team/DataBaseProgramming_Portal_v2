@@ -84,16 +84,26 @@ public class CourseDAO {
 		return enrolledList;
 	}
 	
-	public ArrayList<CourseDTO> getList(){
+	public ArrayList<CourseDTO> getList(String category, String major, String search, int pageNumber){
+		if(category.equals("전체")) {
+			category = "";
+		}
+		if(major.equals("전체")) {
+			major = "";
+		}
 		ArrayList<CourseDTO> courseList = null;
 		String SQL = "";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 			try {
-				SQL = "SELECT * FROM Course LIMIT 10";
+				SQL = "SELECT * FROM Course WHERE category LIKE ? "
+						+ "AND major LIKE ? AND courseName LIKE ? ORDER BY courseNo DESC LIMIT " + pageNumber * 10 + ", " + pageNumber * 10 + 11;
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1,  "%" + category + "%");
+				pstmt.setString(2, "%" + major + "%");
+				pstmt.setString(3, "%" + search + "%");
 				rs = pstmt.executeQuery();
 				courseList = new ArrayList<CourseDTO>();
 				while(rs.next()) {

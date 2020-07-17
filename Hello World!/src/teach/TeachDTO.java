@@ -180,8 +180,8 @@ public class TeachDTO {
 	public TeachDTO() {
 		;
 	}
-	public TeachDTO(String prof, String room, String day, String startTime, String endTime, int year, int semester,
-			int courseNo, int classNo, int num) {
+	public TeachDTO(String prof, String room, String day, String startTime, String endTime,
+			int year, int semester,	int courseNo, int classNo, int num) {
 		super();
 		this.prof = prof;
 		this.room = room;

@@ -3,6 +3,7 @@
 <%@ page import="course.CourseDAO" %>
 <%@ page import="course.CourseDTO" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.net.URLEncoder" %>
     
 <!DOCTYPE html>
 <html>
@@ -17,14 +18,14 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String category = "전체";
-	String searchType = "최신순";
+	String major = "전체";
 	String search = "";
 	int pageNumber = 0;
 	if(request.getParameter("category") != null) {
 		category = request.getParameter("category");
 	}
-	if(request.getParameter("searchType") != null) {
-		searchType = request.getParameter("searchType");
+	if(request.getParameter("major") != null) {
+		major = request.getParameter("major");
 	}
 	if(request.getParameter("search") != null) {
 		search = request.getParameter("search");
@@ -36,8 +37,7 @@
 			System.out.println("검색 페이지 번호 오류");
 		}
 	}
-		%>
-<%
+	
 	request.setCharacterEncoding("UTF-8");
 	if(request.getParameter("search") != null) {
 		search = request.getParameter("search");
@@ -49,7 +49,7 @@
 			System.out.println("검색 페이지 번호 오류");
 		}
 	}
-		%>
+%>
 	<%@ include file="./top.jsp" %>
 	<br>
 	<div class="container">
@@ -60,14 +60,14 @@
 				<option value="전공선택" <%if(category.equals("전공선택")) out.println("selected");%>>전공선택</option>
 				<option value="교양" <%if(category.equals("교양")) out.println("selected");%>>교양</option>
 			</select>
-			<select name="searchType" class="form-control mx-1 mt-2">
-				<option value="최신순" <%if(searchType.equals("최신순")) out.println("selected");%>>최신순</option>
-				<option value="추천순" <%if(searchType.equals("추천순")) out.println("selected");%>>추천순</option>
+			<select name="major" class="form-control mx-1 mt-2">
+				<option value="전체">전체</option>
+				<option value="컴퓨터과학전공" <%if(major.equals("컴퓨터과학전공")) out.println("selected");%>>컴퓨터과학전공</option>
+				<option value="경영학부" <%if(major.equals("경영학부")) out.println("selected");%>>경영학부</option>
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
 			<button type = "submit" class = "btn btn-primary mx-1 mt-2">검색</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a>
-			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a>
 		</form>
 		<br>
 		<div class="row">
@@ -89,8 +89,10 @@
 				<tbody>
 					<%
 					ArrayList<CourseDTO> courseList = new ArrayList<CourseDTO>();
-					courseList = new CourseDAO().getList();
+					courseList = new CourseDAO().getList(category, major, search, pageNumber);
+					if(courseList != null)
 						for(int i = 0; i < courseList.size(); i++){
+							if(i == 10) break;
 							CourseDTO course = courseList.get(i);
 					%>
 					<tr>
@@ -114,7 +116,7 @@
 							<% } %>
 						</td>
 						<td>
-							<a onclick="return confirm('삭제하시겠습니까?')" href="./insertionDeleteAction.jsp?courseNo=<%=course.getCourseNo()%>">삭제</a>
+							<a onclick="return confirm('삭제하시겠습니까?')" href="./courseDeleteAction.jsp?courseNo=<%=course.getCourseNo()%>">삭제</a>
 						</td>
 					</tr>
 					<%
@@ -122,7 +124,38 @@
 					%>
 				</tbody>
 			</table>
-			
+			<ul class="pagination justify-content-center mt-3">
+		<li class="page-item">
+<%
+	if(pageNumber <= 0){
+%>		
+	<a class="page-link disabled">이전</a>
+<%
+	} else {	
+%>
+	<a class="page-link" href="./insertionCourse.jsp?category=<%=URLEncoder.encode(category, "UTF-8") %>&major=
+		<%=URLEncoder.encode(major, "UTF-8")%>&search=<%=URLEncoder.encode(search, "UTF-8")%>&pageNumber=
+		<%=pageNumber - 1%>">이전</a>
+<%
+	}
+%>
+		</li>
+		<li>
+<%
+	if(courseList.size() < 11){
+%>		
+	<a class="page-link disabled">다음</a>
+<%
+	} else {	
+%>
+	<a class="page-link" href="./insertionCourse.jsp?category=<%=URLEncoder.encode(category, "UTF-8") %>&major=
+		<%=URLEncoder.encode(major, "UTF-8")%>&search=<%=URLEncoder.encode(search, "UTF-8")%>&pageNumber=
+		<%=pageNumber + 1%>">다음</a>
+<%
+	}
+%>	
+		</li>
+	</ul>	
 		</div>
 		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
     	<div class="modal-dialog">
