@@ -111,5 +111,3 @@ SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semest
 SELECT * FROM Course LIMIT 10
 SELECT * FROM Teach;
 
-
-

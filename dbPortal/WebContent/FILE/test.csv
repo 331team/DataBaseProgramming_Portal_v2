@@ -1,0 +1,9 @@
+------WebKitFormBoundaryA97Gjh3qEbRI0rv1
+Content-Disposition: form-data; name="upload"; filename="양식.csv"
+Content-Type: text/csv
+
+년도,학기,과목코드,분반,요일,시작시간,끝나는시간,교수명,강의실,수강정원
+2020,1,205160,2,월수,1030,1145,김주균,명신 413,50
+2020,1,205160,3,화목,900,1015,문봉희,명신 305,100
+
+------WebKitFormBoundaryA97Gjh3qEbRI0rv1--

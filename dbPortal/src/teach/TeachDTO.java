@@ -1,5 +1,4 @@
 package teach;
-
 public class TeachDTO {
 	int courseNo;
 	String prof;
@@ -16,6 +15,7 @@ public class TeachDTO {
 	int PF;
 	int cyber;
 	String courseName;
+	int num;
 	
 	public int getCourseNo() {
 		return courseNo;
@@ -166,12 +166,21 @@ public class TeachDTO {
 		this.courseName = courseName;
 	}
 
+	public int getNum() {
+		return num;
+	}
+
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 
 	public TeachDTO() {
 		;
 	}
 	public TeachDTO(String prof, String room, String day, String startTime, String endTime, int year, int semester,
-			int courseNo, int classNo) {
+			int courseNo, int classNo, int num) {
 		super();
 		this.prof = prof;
 		this.room = room;
@@ -182,11 +191,12 @@ public class TeachDTO {
 		this.semester = semester;
 		this.courseNo = courseNo;
 		this.classNo = classNo;
+		this.num = num;
 	}
 
 
 	public TeachDTO(int courseNo, String prof, String room, String day, String startTime, String endTime, int year,
-			int semester, int classNo, String category, String major, int credit, int pF, int cyber,
+			int semester, int classNo, int num, String category, String major, int credit, int pF, int cyber,
 			String courseName) {
 		super();
 		this.courseNo = courseNo;
@@ -198,6 +208,19 @@ public class TeachDTO {
 		this.year = year;
 		this.semester = semester;
 		this.classNo = classNo;
+		this.num = num;
+		this.category = category;
+		this.major = major;
+		this.credit = credit;
+		PF = pF;
+		this.cyber = cyber;
+		this.courseName = courseName;
+	}
+
+
+	public TeachDTO(String category, String major, int credit, int pF, int cyber, String courseName, int courseNo) {
+		super();
+		this.courseNo = courseNo;
 		this.category = category;
 		this.major = major;
 		this.credit = credit;
