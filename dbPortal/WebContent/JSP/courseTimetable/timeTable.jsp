@@ -3,7 +3,7 @@
 <%@ page import="course.CourseDAO" %>
 <%@ page import="course.CourseDTO" %>
 <%@ page import="java.util.ArrayList" %>
-<% if(session.getAttribute("user") == null) response.sendRedirect("login.jsp"); %>    
+<% if(session.getAttribute("user") == null) response.sendRedirect("/dbPortal/JSP/login.jsp"); %>    
 <% int year = 2020;
 if(request.getParameter("year")!=null){
 	year = Integer.parseInt(request.getParameter("year"));
@@ -66,13 +66,39 @@ public int getDayValue(String str){
 			</div>
 			</form>
 		</div>
-		<table border= "1" class="table table-striped">
-		   <tr class="bg-primary"><td width="5px"></td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td></tr>
-		</table>
+		<div class="wrap">
+			<table class="table">
+				<thead>
+					<tr class="bg-primary">
+				   		<th width="5px"></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
+				   	</tr>
+			   	</thead>
+			   	<tbody>
+			   		<%
+			   		int y = 0;
+			   		for(int i=9; i<=17; i++){%>
+					   <tr height="80px">
+					   		<td><%=i %>
+					   <%
+					      y += 80;
+					   %>
+					   		</td>
+					   		<td></td>
+					   		<td></td>
+					   		<td></td>
+					   		<td></td>
+					   		<td></td>
+					   	</tr>
+					   <%
+					}
+			   		%>
+			   	</tbody>
+			   
+			</table>
+		</div>
 		<div class="schedule">
 		<%
 		   int endHr = 14;
-		   int y = 0;
 		   int totalEnrolledClass = 0, totalEnrolledCredit = 0;
 		   String day = null, startTime = null, endTime = null, where = null;
 		   ArrayList<CourseDTO> enroll = new CourseDAO().enrolled(session_id, year, semester);
@@ -98,8 +124,8 @@ public int getDayValue(String str){
 		      
 		      int len = day.length();
 		      for(int j=0; j<len; j+=1){
-		         int dayPos = 26 + 216*getDayValue(day.substring(j, j+1));
-		         %><div class="course" style="top:<%=startPos%>px; left:<%=dayPos%>px; height:<%=height%>px; 
+		         int dayPos = 42 + 213*getDayValue(day.substring(j, j+1));
+		         %><div class="course" style="top:<%=-721 + startPos%>px; left:<%=dayPos%>px; height:<%=height%>px; width: 214px; 
 		         background-color:<%=color[totalEnrolledClass%8]%>">
 		            <br><%=enroll.get(i).getCourseName()%><br><%=where%>
 		         </div>
@@ -109,10 +135,6 @@ public int getDayValue(String str){
 		      totalEnrolledClass += 1;
 		      totalEnrolledCredit += enroll.get(i).getCredit();
 		   }
-		   for(int i=9; i<=endHr; i++){%>
-			   <div class="time" style="top:<%=y%>; left:0;"><%=i%></div><%
-			      y += 80;
-			}
 			%> 
 		</div>
 	</div>

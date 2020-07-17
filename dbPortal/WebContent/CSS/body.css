@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-button { width: 80px; height: 25px; }
 div{
    text-align: center;
    font-family: 'Jeju Gothic', sans-serif;
@@ -8,21 +7,20 @@ div{
 option{
    font-family: 'Jeju Gothic', sans-serif;
 }
-.schedule {
-   position: relative;  
-   border: 1px solid #E7E7E7;
+.wrap {
+   position:relative;
+   display:block;
    margin-top:-16px;
    margin-left: auto;
    margin-right: auto;
    font-size:15px;
-}
-.time{
-   text-align: left;
-   height:78px;
-   border: 1px solid #E7E7E7;
+   border: 0px;
 }
 .course{
-   width: 218px;
-   position: absolute;
-   border-color: #D8D8D8;
+	position: relative;
+   height:78px;
+}
+
+.table{
+	border:1px gray solid;
 }
