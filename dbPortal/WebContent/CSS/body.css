@@ -1,4 +1,4 @@
-@charset "UTF-8";
+harset "UTF-8";
 
 div{
    text-align: center;
@@ -16,11 +16,12 @@ option{
    font-size:15px;
    border: 0px;
 }
-.course{
+.schedule{
 	position: relative;
+}
+.course{
+	text-align: center;
+	position: absolute;
    height:78px;
 }
 
-.table{
-	border:1px gray solid;
-}

@@ -41,7 +41,7 @@ public int getDayValue(String str){
 <body>
 	<%@ include file="../top.jsp" %>
 	<div class="container col-md-offset-1 col-md-15">
-		<div class="row justify-content-between container">
+		<div class="row justify-content-between container mt-1">
 			<h3 class="mx-1 mt-2">시간표</h3>
 			<form action="timeTable.jsp">
 			<div class="row">
@@ -66,8 +66,8 @@ public int getDayValue(String str){
 			</div>
 			</form>
 		</div>
-		<div class="wrap">
-			<table class="table">
+		<div class="wrap mt-1">
+			<table class="table table-bordered">
 				<thead>
 					<tr class="bg-primary">
 				   		<th width="5px"></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
@@ -76,7 +76,7 @@ public int getDayValue(String str){
 			   	<tbody>
 			   		<%
 			   		int y = 0;
-			   		for(int i=9; i<=17; i++){%>
+			   		for(int i=9; i<=19; i++){%>
 					   <tr height="80px">
 					   		<td><%=i %>
 					   <%
@@ -118,14 +118,13 @@ public int getDayValue(String str){
 		      hr = Integer.parseInt(endTime)/100*60;
 		      min = Integer.parseInt(endTime)%100;
 		      int endTimeAll = (hr+min-540)/15;
-		      
-		      int startPos = (startTimeAll)*20;
+		      int startPos = (startTimeAll)*20 - 897;
 		      int height = (endTimeAll - startTimeAll)*20;
-		      
+		      System.out.println(startPos);
 		      int len = day.length();
 		      for(int j=0; j<len; j+=1){
 		         int dayPos = 42 + 213*getDayValue(day.substring(j, j+1));
-		         %><div class="course" style="top:<%=-721 + startPos%>px; left:<%=dayPos%>px; height:<%=height%>px; width: 214px; 
+		         %><div class="course" style="top:<%=startPos%>px; left:<%=dayPos%>px; height:<%=height%>px; width: 214px; 
 		         background-color:<%=color[totalEnrolledClass%8]%>">
 		            <br><%=enroll.get(i).getCourseName()%><br><%=where%>
 		         </div>

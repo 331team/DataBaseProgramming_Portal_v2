@@ -47,21 +47,20 @@ String majors[] = {"경영학부", "소프트웨어융합전공", "컴퓨터과�
 </head>
 <body>
 	<%@ include file="../top.jsp" %>
-	<br>
-	<div class="container">
+	<div class="container ">
 		<div class = "col-md-offset-1 col-md-15">
 			<div class="form-row justify-content-between container">
-				<h3>신청한 강의</h3>
+				<h3 class="mt-2">신청한 강의</h3>
 				<form action="enrollCourse.jsp" method="get">
-				<div class="row">
-					<div class="form-group">
+				<div class="row ">
+					<div class="form-group mt-2">
 						<select name="year" class="form-control">
 						<%for(int i=2011; i< 2022; i++){ %>
 							<option value="<%=i%>" <%if(i==year){%> selected <%}%>><%=i %></option>
 						<%} %>
 						</select>
 					</div>					
-					<div class="form-group">
+					<div class="form-group mx-1 mt-2">
 						<select name="semester" class="form-control">
 							<option value="1" <%if(semester==1){%> selected <%}%>>1학기</option>
 							<option value="2" <%if(semester==2){%> selected <%}%>>여름학기</option>
@@ -69,7 +68,7 @@ String majors[] = {"경영학부", "소프트웨어융합전공", "컴퓨터과�
 							<option value="4" <%if(semester==4){%> selected <%}%>>겨울학기</option>
 						</select>
 					</div>
-					<div>
+					<div class="mt-2">
 						<button type="submit" class="btn btn-primary">검색</button>
 					</div>
 				</div>
@@ -138,7 +137,7 @@ String majors[] = {"경영학부", "소프트웨어융합전공", "컴퓨터과�
 				<h3>개설 강의</h3>
 				<form action="enrollCourse.jsp" method="get">
 				<div class="row justify-content-between container">
-					<div class="tab_wrap">
+					<div class="tab_wrap mt-1">
 					  <div class="tab_menu_container">
 					    <a href="enrollCourse.jsp?type=major&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn" id="major">전공</a>
 					    <a href="enrollCourse.jsp?type=gen&year=<%=year %>&semester=<%=semester %>" class="tab_menu_btn" id="gen">교양</a>
@@ -163,7 +162,7 @@ String majors[] = {"경영학부", "소프트웨어융합전공", "컴퓨터과�
 					<%} %>
 				</div>
 				</form>
-				<table class="table table-striped table-hover">
+				<table class="table table-striped table-hover mt-1">
 					<thead>
 						<tr class="bg-primary">
 							<th>분류</th>
