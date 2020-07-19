@@ -12,6 +12,7 @@
 <%@ page import = "java.nio.file.Paths" %>
 <%@ page import = "teach.TeachDAO" %>
 <%@ page import = "teach.TeachDTO" %>
+<%@ page import="java.io.PrintWriter" %>
 <%
     request.setCharacterEncoding("EUC-KR");
     // getParameter()는 바이너리 형태의 자료를 수신할 수 없다.
@@ -52,11 +53,9 @@ try{
     br = Files.newBufferedReader(Paths.get(filePath));
     //Charset.forName("UTF-8");
     String line = "";
-    line = br.readLine();line = br.readLine();line = br.readLine();
+    
     while((line = br.readLine()) != null){
         String array[] = line.split(",");
-        for(int i=0;i<array.length;i++)
-        	System.out.println(array[i]);
         // prof, room, day, startTime, endTime, year, semester, courseNo, classNo, num
         // csv 순서
         // year, semester, courseNo, classNo, day, startTime, endTime, prof, room, num
@@ -65,9 +64,7 @@ try{
     		System.out.println(teach.getCourseName());
             new TeachDAO().write(teach);
         } catch(Exception ee){
-        %>
-        	<div>실패</div>
-        <%
+        	System.out.println(array[0]);
         	continue;
         }
     }
@@ -84,7 +81,12 @@ try{
         ee.printStackTrace();
     }
 }
-response.sendRedirect("insertCourse.jsp");
+PrintWriter script = response.getWriter();
+script.println("<script>");
+script.println("alert('추가 완료!');");
+script.println("location.href = 'insertionCourse.jsp';");
+script.println("</script>");
+script.close();
 %>
 </body>
 </html>

@@ -120,7 +120,7 @@ public class UserDAO {
 	}
 	
 	public boolean setUserEmailChecked(String userID) {
-		String SQL = "UPDATE USER SET usrEmailChecked = true WHERE usrID = ?";
+		String SQL = "UPDATE UserInfo SET usrEmailChecked = true WHERE usrID = ?";
 		try {
 			conn = DatabaseUtil.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -176,5 +176,57 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public ArrayList<UserDTO> getList(){
+		ArrayList<UserDTO> userList = null;
+		String SQL = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+			try {
+				SQL = "SELECT * FROM UserInfo LIMIT 10";
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				rs = pstmt.executeQuery();
+				userList = new ArrayList<UserDTO>();
+				while(rs.next()) {
+					UserDTO user = new UserDTO();
+					user.setIsStudent(rs.getInt(1));
+					user.setMajor(rs.getString(2));
+					user.setName(rs.getString(3));
+					user.setUsrPW(rs.getString(4));
+					user.setUsrID(rs.getString(5));
+					user.setUsrEmail(rs.getString(6));
+					user.setUsrEmailHash(rs.getString(7));
+					user.setUsrEmailChecked(rs.getInt(8));
+					userList.add(user);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
+			
+		return userList; // 실패하면 null값이 들어가 있을 것
+	}
+	
+	public int delete(String usrID) {
+		String SQL = "DELETE FROM UserInfo WHERE usrID = ?";
+		System.out.println("sql");
+		try {
+			conn = DatabaseUtil.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, usrID);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + usrID);
+			return i;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	
 	}
 }

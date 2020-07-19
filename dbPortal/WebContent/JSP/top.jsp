@@ -45,9 +45,6 @@ String url = "/dbPortal/JSP/";
 				<li class="nav-item active">
 					<a class="nav-link" href= <%=url + "userDelete.jsp"%>>회원정보</a>
 				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href= <%=url + "insertCourse.jsp"%>>CSV 테스트용</a>
-				</li>
 			<% } %>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
