@@ -112,3 +112,5 @@ SELECT * FROM Course LIMIT 10
 SELECT * FROM Teach;
 DELETE FROM Teach;
 
+INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '이현자', '0000', '17123', 'csssr1207@gmail.com', 'a', false);
+

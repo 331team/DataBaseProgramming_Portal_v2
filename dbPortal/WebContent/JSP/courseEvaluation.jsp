@@ -4,6 +4,7 @@
 <%@ page import="user.UserDAO" %>
 <%@ page import="evaluation.EvaluationDAO" %>
 <%@ page import="evaluation.EvaluationDTO" %>
+<%@ page import="user.UserDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
@@ -13,6 +14,18 @@
 <title>index</title>
 </head>
 <body>
+<%
+boolean emailChecked = new UserDAO().getUserEmailChecked((String)session.getAttribute("user"));
+if(emailChecked == false) {
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('이메일 인증을 해주세요');");
+	script.println("location.href = 'index.jsp'");
+	script.println("</script>");
+	script.close();		
+	return;
+}
+%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String category = "전체";

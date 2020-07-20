@@ -56,6 +56,7 @@ String url = "/dbPortal/JSP/";
 							<a class="dropdown-item" href= <%=url + "userManage/userJoin.jsp"%>>회원가입</a>
 						<%} %>
 						<% if(session_id !=null){ %>
+							<a class="dropdown-item" href=<%=url + "userManage/emailSendAction.jsp" %>>이메일 인증</a>
 							<a class="dropdown-item" href= <%=url + "userManage/updateUserInfo.jsp"%>>정보수정</a>
 							<a class="dropdown-item" href= <%=url + "logout.jsp"%>>로그아웃</a>
 						<%} %>
