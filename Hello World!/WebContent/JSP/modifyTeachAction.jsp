@@ -22,6 +22,7 @@
 		return ;
 	}
 	
+	
 	String prof = null;
 	String room = null;
 	String class_day = null;
@@ -99,7 +100,7 @@
 		try {
 			year = Integer.parseInt(request.getParameter("year"));
 		} catch(Exception e){
-			System.out.println("년도 데이터 오류");
+			System.out.println("학점 데이터 오류");
 		}
 		
 	}
@@ -109,7 +110,7 @@
 		try {
 			semester = Integer.parseInt(request.getParameter("semester"));
 		} catch(Exception e){
-			System.out.println("학기 데이터 오류");
+			System.out.println("PF 데이터 오류");
 		}
 		
 	}
@@ -135,7 +136,7 @@
 		script.println("</script>");
 		script.close();
 		return ;
-	} else {
+	}  else {
 		TeachDAO teachDAO = new TeachDAO();
 		int courseNo = teachDAO.getCourseInfo(courseName);
 		int result = teachDAO.write(new TeachDTO(prof, room, class_day, startTime, endTime, year, semester, courseNo, 0, num));

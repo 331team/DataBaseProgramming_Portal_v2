@@ -14,6 +14,16 @@
 <link rel="stylesheet" href="../CSS/custom.css">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+		function showPopup(cu) { 
+			var pa = cu.parentNode.parentNode;
+			var courseNo = pa.children[0].innerText;
+			alert(courseNo);
+			window.open("modifyCourse.jsp?courseNo="+courseNo, "강의수정", "width=400, height=300, left=100, top=50"); 
+			
+		}
+		
+</script>
 <body>
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -81,9 +91,8 @@
 						<th style="background-color: #eeeeee; text-align: center;">학점</th>
 						<th style="background-color: #eeeeee; text-align: center;">PF</th>
 						<th style="background-color: #eeeeee; text-align: center;">사이버</th>
+						<th style="background-color: #eeeeee; text-align: center;">수정</th>
 						<th style="background-color: #eeeeee; text-align: center;">삭제</th>
-						
-						
 					</tr>
 				</thead>
 				<tbody>
@@ -114,6 +123,9 @@
 								<% } else { %>
 								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
 							<% } %>
+						</td>
+						<td>
+							<a class="btn btn-primary mx-1 mt-2" onClick="showPopup(this)">수정</a>
 						</td>
 						<td>
 							<a onclick="return confirm('삭제하시겠습니까?')" href="./courseDeleteAction.jsp?courseNo=<%=course.getCourseNo()%>">삭제</a>
@@ -156,12 +168,13 @@
 %>	
 		</li>
 	</ul>	
+			
 		</div>
 		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
     	<div class="modal-dialog">
     		<div class="modal-content">
     			<div class="modal-header">
-					<h5 class="modal-title" id="modal">평가 등록</h5>
+					<h5 class="modal-title" id="modal">강의 등록</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -227,7 +240,7 @@
 		</div>
 	</div>
 	</div>
-		
+	
 	<%@ include file="./bottom.jsp" %>
 </body>
 </html>

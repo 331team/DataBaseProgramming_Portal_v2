@@ -157,6 +157,38 @@ public class CourseDAO {
 		return -1; 
 	}
 	
+	
+	//수정하기
+	public int modify(CourseDTO courseDTO) {
+		String SQL = "UPDATE COURSE SET category = ?, major = ?, credit = ?, cyber = ?,PF = ?, courseName = ? WHERE courseNo = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		if(check(courseDTO.getCourseName())) {
+			try {
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, courseDTO.getCategory());
+				pstmt.setString(2, courseDTO.getMajor());
+				pstmt.setInt(3, courseDTO.getCredit());
+				pstmt.setInt(4, courseDTO.getCyber());
+				pstmt.setInt(5, courseDTO.getPF());
+				pstmt.setString(6, courseDTO.getCourseName());
+				pstmt.setInt(7, courseDTO.getCourseNo());
+				return pstmt.executeUpdate(); //
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
+		}
+		else
+			return -2;
+		return -1; 
+	}
+	
 	public int delete(String courseNo) {
 		String SQL = "DELETE FROM course WHERE courseNo = ?";
 		Connection conn = null;

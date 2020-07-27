@@ -61,6 +61,53 @@ public class TeachDAO {
 			
 		return teachList;
 	}
+	
+	//게시글 가져오기
+	public TeachDTO getTeach(int courseNo, int semester, int year, int classNo){
+		String SQL = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+			try {
+				SQL = "SELECT * FROM Teach NATURAL JOIN Course WHERE courseNo = ? AND semester = ? AND year = ? AND classNo = ?";
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, courseNo);
+				pstmt.setInt(2, semester);
+				pstmt.setInt(3, year);
+				pstmt.setInt(4, classNo);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					TeachDTO teach = new TeachDTO(
+							rs.getInt(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6),
+							rs.getInt(7),
+							rs.getInt(8),
+							rs.getInt(9),
+							rs.getInt(10),
+							rs.getString(11),
+							rs.getString(12),
+							rs.getInt(13),
+							rs.getInt(14),
+							rs.getInt(15),
+							rs.getString(16));
+					return teach;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
+			
+		return null;
+	}
+	
 	/*
 	public static ArrayList<TeachDTO> getTeachList(String prof){
 		ArrayList<TeachDTO> teachList = null;

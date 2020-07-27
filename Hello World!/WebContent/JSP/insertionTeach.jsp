@@ -86,6 +86,7 @@
 						<th style="background-color: #eeeeee; text-align: center;">교수명</th>
 						<th style="background-color: #eeeeee; text-align: center;">사이버</th>
 						<th style="background-color: #eeeeee; text-align: center;">P/F</th>
+						<th style="background-color: #eeeeee; text-align: center;">조회</th>
 						<th style="background-color: #eeeeee; text-align: center;">삭제</th>
 					</tr>
 				</thead>
@@ -124,6 +125,10 @@
 								<% } else { %>
 								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
 							<% } %>
+						</td>
+						<td>
+							<a href="./viewTeach.jsp?courseNo=<%=teach.getCourseNo()%>&
+								classNo=<%=teach.getClassNo()%>&year=<%=teach.getYear()%>&semester=<%=teach.getSemester()%>">조회</a>
 						</td>
 						<td>
 							<a onclick="return confirm('삭제하시겠습니까?')" href="./teachDeleteAction.jsp?courseNo=<%=teach.getCourseNo()%>&
