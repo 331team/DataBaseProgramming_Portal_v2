@@ -77,6 +77,8 @@
 				<thead>
 					<tr>
 						<th style="background-color: #eeeeee; text-align: center;">과목코드</th>
+						<th style="background-color: #eeeeee; text-align: center;">연도</th>
+						<th style="background-color: #eeeeee; text-align: center;">학기</th>
 						<th style="background-color: #eeeeee; text-align: center;">분반</th>
 						<th style="background-color: #eeeeee; text-align: center;">과목명</th>
 						<th style="background-color: #eeeeee; text-align: center;">학점</th>
@@ -105,6 +107,16 @@
 					%>
 					<tr>
 						<td><%=teach.getCourseNo() %></td>
+						<td><%=teach.getYear() %></td>
+						<%if(teach.getSemester() == 1){%>
+							<td>1학기</td>
+						<%;} else if(teach.getSemester() == 2){%>
+							<td>여름학기</td>
+						<%;}else if(teach.getSemester() == 3){%>
+							<td>2학기</td>
+						<%;}else if(teach.getSemester() == 4){%>
+							<td>겨울학기</td>
+						<%;} %>
 						<td><%=teach.getClassNo() %></td>
 						<td><%=teach.getCourseName() %></td>
 						<td><%=teach.getCredit() %></td>

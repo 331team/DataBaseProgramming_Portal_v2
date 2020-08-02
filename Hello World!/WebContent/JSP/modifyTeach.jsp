@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="teach.TeachDAO" %>
+<%@ page import="teach.TeachDTO" %>
 <%@ page import="course.CourseDAO" %>
 <%@ page import="course.CourseDTO" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 탈퇴</title>
+<title>분반 조회</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -19,155 +22,186 @@
 	<link rel="stylesheet" href="../CSS/custom.css">
 	
 </head>
-<%
-String courseNo = null; 
 
-if(request.getParameter("courseNo") != null) {
-	courseNo = request.getParameter("courseNo");
-	System.out.println(courseNo);
-}
-
-%>
-<body>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String category = "전체";
-	String major = "전체";
-	String search = "";
-	int pageNumber = 0;
-	if(request.getParameter("category") != null) {
-		category = request.getParameter("category");
-	}
-	if(request.getParameter("major") != null) {
-		major = request.getParameter("major");
-	}
-	if(request.getParameter("search") != null) {
-		search = request.getParameter("search");
-	}
-	if(request.getParameter("pageNumber") != null) {
-		try{
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		} catch(Exception e){
-			System.out.println("검색 페이지 번호 오류");
-		}
+	String usrID = null;
+	
+	if(session.getAttribute("user") != null){
+		usrID = (String) session.getAttribute("user");
 	}
 	
-	request.setCharacterEncoding("UTF-8");
-	if(request.getParameter("search") != null) {
-		search = request.getParameter("search");
+	if(usrID == null) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인을 해주세요.');");
+		script.println("location.href = 'login.jsp';");
+		script.println("</script>");
+		script.close();
+		return ;
 	}
-	if(request.getParameter("pageNumber") != null) {
-		try{
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	int courseNo = -1;
+	int classNo = -1;
+	int year = -1;
+	int semester = -1;
+	
+	if(request.getParameter("courseNo") != null) {
+		System.out.println("courseNo");
+		try {
+			courseNo = Integer.parseInt(request.getParameter("courseNo"));
 		} catch(Exception e){
-			System.out.println("검색 페이지 번호 오류");
+			System.out.println("강의번호 데이터 오류");
 		}
+		
 	}
+	
+	if(request.getParameter("classNo") != null) {
+		System.out.println("classNo");
+		try {
+			classNo = Integer.parseInt(request.getParameter("classNo"));
+		} catch(Exception e){
+			System.out.println("분반 번호 데이터 오류");
+		}
+		
+	}
+	if(request.getParameter("year") != null) {
+		System.out.println("year");
+		try {
+			year = Integer.parseInt(request.getParameter("year"));
+		} catch(Exception e){
+			System.out.println("년도 데이터 오류");
+		}
+		
+	}
+	
+	if(request.getParameter("semester") != null) {
+		System.out.println("semester");
+		try {
+			semester = Integer.parseInt(request.getParameter("semester"));
+		} catch(Exception e){
+			System.out.println("학기 데이터 오류");
+		}
+		
+	}
+	if(classNo == -1 || courseNo == -1 || semester == -1 || year == -1){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 분반입니다.')");
+		script.println("location.href='insertionTeach.jsp'");
+		script.println("</script>");
+		
+	}
+	TeachDTO teach = new TeachDAO().getTeach(courseNo, semester, year, classNo);
+	String day = teach.getDay();
+	String startTime = teach.getStartTime();
+	String class_st_h = startTime.substring(0,2);
+	String class_st_m = startTime.substring(2);	
+	String endTime = teach.getEndTime();
+	String class_end_h = endTime.substring(0,2);
+	String class_end_m = endTime.substring(2);
+	String time = day + " " + startTime.substring(0,2) + ":" + startTime.substring(2) + " ~ " + endTime.substring(0,2) + ":" + endTime.substring(2);
 %>
+
+<body>
 	<section class="container mt-3" style="max-width:560px;">
-    	<div class="modal-dialog">
-    		<div class="modal-content">
-    			<div class="modal-header">
-					<h5 class="modal-title" id="modal">분반 등록</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="./insertionTeachAction.jsp" method="post">
-						<div class="form-row">
-							<div class="form-group col-sm-6">
-							<label>강의명</label>
-							<select name="courseName" class="form-control">
-							<%
-								ArrayList<CourseDTO> courseList = new ArrayList<CourseDTO>();
-								courseList = new CourseDAO().getList(category, major, search, pageNumber);
-								for(int i = 0; i < courseList.size(); i++){
-							%>
-									<option value="<%= courseList.get(i).getCourseName() %>"><%= courseList.get(i).getCourseName() %></option>
-							<%
-								}
-							%>
-							</select>
-							</div>
-							<div class="form-group col-sm-6">
-								<label>교수명</label>
-								<input type="text" name="prof" class="form-control" maxlength="20">
-							</div>
-						</div>
-						<div class="form-group">
-								<label>요일</label>
-								<br>
-								<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="class_day" id="day" value="mon"><label>월</label>
+    	<div class="row">
+    		<form action="./modifyTeachAction.jsp?courseName=<%= teach.getCourseName() %>" method="post">
+    			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+    				<thead>
+    					<tr>
+    						<th colspan = "3" style="background-color: #eeeeee; text-align: center;">분반 수정</th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    					<tr>
+							<td style="width: 20%">강의명</td>
+    						<td colspan="2"><%= teach.getCourseName() %></td>
+    					</tr>
+    					<tr>
+							<td style="width: 20%">분반 번호</td>
+    						<td colspan="2"><%= teach.getClassNo() %></td>
+    					</tr>
+    					<tr>
+							<td style="width: 20%">교수명</td>
+    						<td colspan="2"><input type="text" name="prof" class="form-control" maxlength="20" value = "<%= teach.getProf() %>"></td>
+    					</tr>
+    					<tr>
+    						<td style="width: 20%">요일</td>
+    						<td colspan="2">
+	               				<div class="form-check form-check-inline">
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="mon" <%if(day.contains("월")){ %> checked<%} %>><label>월</label>
+	      						</div>
+	               				<div class="form-check form-check-inline">	               				
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="tue" <%if(day.contains("화")){ %> checked<%} %>><label>화 </label>
 	               				</div>
 	               				<div class="form-check form-check-inline">
-	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="tue"><label>화 </label>
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="wed" <%if(day.contains("수")){ %> checked<%} %>><label>수 </label>
 	               				</div>
 	               				<div class="form-check form-check-inline">
-	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="wed"><label>수 </label>
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="thu" <%if(day.contains("목")){ %> checked<%} %>><label>목 </label>
 	               				</div>
 	               				<div class="form-check form-check-inline">
-	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="thu"><label>목 </label>
-	               				</div>
-	               				<div class="form-check form-check-inline">
-	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="fri"><label>금 </label>
+	               				<input class="form-check-input" type="checkbox" name="class_day" id="day" value="fri" <%if(day.contains("금")){ %> checked<%} %>><label>금 </label>
        				        	</div>
-       				        </div>
-       				       <div class="form-row">
-       				        <div class="form-group col-sm-6">
-								<label>장소</label>
-								<select name="room" class="form-control">
-									<option value="명신관">명신관</option>
-									<option value="순헌관">순헌관</option>
-									<option value="과학관">과학관</option>
+       				        </td>
+       				    </tr>
+       				    <tr>
+       				    	<td style="width: 20%">장소</td>
+    						<td colspan="2">
+								<select name="room" class="form-control" id = "room">
+									<option value="명신관" <%if (teach.getRoom().equals("명신관")) %> selected>명신관</option>
+									<option value="순헌관" <%if (teach.getRoom().equals("순헌관")) %> selected>순헌관</option>
+									<option value="과학관" <%if (teach.getRoom().equals("과학관")) %> selected>과학관</option>
 								</select>
-							</div>
-							<div class="form-group col-sm-6">
-								<label>시간</label>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 20%">시간</td>
+    						<td colspan="2">
 								<table>
 								<td align="center">
-                  <input type="text" name="class_st_h" id="time" style="font-size: 1em; width:25pt;" placeholder="09">
-                  :
-                  <input type="text" name="class_st_m" id="time" style="font-size: 1em; width:25pt;" placeholder="00">
-                  ~
-                  <input type="text" name="class_end_h" id="time" style="font-size: 1em; width:25pt;" placeholder="10">
-                  :
-                  <input type="text" name="class_end_m" id="time" style="font-size: 1em; width:25pt;" placeholder="00">
-            </td> 
-            </table>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-sm-4">
-								<label>년도</label>
+				                  <input type="text" name="class_st_h" id="time" style="font-size: 1em; width:25pt;" value="<%=class_st_h%>">
+				                  :
+				                  <input type="text" name="class_st_m" id="time" style="font-size: 1em; width:25pt;" value="<%=class_st_m%>">
+				                  ~
+				                  <input type="text" name="class_end_h" id="time" style="font-size: 1em; width:25pt;" value="<%=class_end_h%>">
+				                  :
+				                  <input type="text" name="class_end_m" id="time" style="font-size: 1em; width:25pt;" value="<%=class_end_m%>">
+				            	</td> 
+            					</table>
+            				</td>
+						</tr>
+						<tr>
+							<td style="width: 20%">연도</td>
+    						<td colspan="2">
 								<select name="year" class="form-control">
 									<%for(int i=2011; i< 2022; i++){ %>
-									<option value="<%=i%>"><%=i%></option>
+									<option value="<%=i%>" <%if(i == year) %> selected><%=i%></option>
 									<%} %>
 								</select>
-							</div>
-							<div class="form-group col-sm-4">
-								<label>학기</label>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 20%">학기</td>
+    						<td colspan="2">
 								<select name="semester" class="form-control">
-									<option value="1" selected>1학기</option>
-									<option value="2">여름학기</option>
-									<option value="3">2학기</option>
-									<option value="4">겨울학기</option>
+									<option value="1" <%if (semester == 1) %> selected>1학기</option>
+									<option value="2" <%if (semester == 2) %> selected>여름학기</option>
+									<option value="3" <%if (semester == 3) %> selected>2학기</option>
+									<option value="4" <%if (semester == 4) %> selected>겨울학기</option>
 								</select>
-							</div>
-							<div class="form-group col-sm-4">
-								<label>인원</label>
-								<input type="text" name="num" class="form-control" maxlength="20">
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">등록하기</button>
-						</div>
-					</form>
-				</div>
-			</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 20%">인원</td>
+    						<td colspan="2">
+								<input type="text" name="num" class="form-control" maxlength="20" value = "<%= teach.getNum()%>">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<input type = "submit" class="btn btn-primary pull-right" value="수정하기">
+			</form>
 		</div>
 	</section>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

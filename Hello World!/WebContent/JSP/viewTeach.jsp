@@ -116,6 +116,10 @@
     					<td colspan="2"><%= teach.getCourseName() %>
     				</tr>
     				<tr>
+    					<td style="width: 20%">분반 번호</td>
+    					<td colspan="2"><%= teach.getClassNo() %>
+    				</tr>
+    				<tr>
     					<td style="width: 20%">교수명</td>
     					<td colspan="2"><%= teach.getProf() %></td>
     				</tr>
@@ -133,7 +137,15 @@
     				</tr>
     				<tr>
     					<td style="width: 20%">학기</td>
-    					<td colspan="2"><%= teach.getSemester() %>학기</td>
+						<%if(teach.getSemester() == 1){%>
+							<td>1학기</td>
+						<%;} else if(teach.getSemester() == 2){%>
+							<td>여름학기</td>
+						<%;}else if(teach.getSemester() == 3){%>
+							<td>2학기</td>
+						<%;}else if(teach.getSemester() == 4){%>
+							<td>겨울학기</td>
+						<%;} %>
     				</tr>
     				<tr>
     					<td style="width: 20%">인원</td>
