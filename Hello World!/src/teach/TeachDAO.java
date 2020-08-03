@@ -156,7 +156,7 @@ public class TeachDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int classNo = classNoCheck(teachDTO.getCourseNo(), teachDTO.getYear(), teachDTO.getSemester());
-		if(check(teachDTO)) {
+		if(check(teachDTO) == 1) {
 			try {
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -191,7 +191,8 @@ public class TeachDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("modify:"+teachDTO.classNo);
-		if(check(teachDTO)) {
+		int checkNum = check(teachDTO);
+		if(checkNum == 1 || checkNum == (teachDTO.courseNo * 10 + teachDTO.classNo)) {
 			try {
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -214,12 +215,18 @@ public class TeachDAO {
 				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
 			}
 		} else {
+			if(check(teachDTO) == -1)
+				System.out.println("교수");
+			else if(check(teachDTO) == -2)
+				System.out.println("장소");
+			else
+				System.out.println(check(teachDTO));
 			return -2; // 중복
 		}
 		return -1; 
 	}
 	//요일, 시간, 분반, 교수 중복 확인
-	private boolean check(TeachDTO teachDTO) {
+	private int check(TeachDTO teachDTO) {
 		// TODO Auto-generated method stub
 		String SQL = "";
 		Connection conn = null;
@@ -234,15 +241,20 @@ public class TeachDAO {
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					if(compareDay(rs.getString(3), teachDTO.getDay())) {
+						System.out.println("요일"+compareDay(rs.getString(3), teachDTO.getDay()));
 						int startTime1 = Integer.parseInt(rs.getString(4));
 						int endTime1 = Integer.parseInt(rs.getString(5));
 						int startTime2 = Integer.parseInt(teachDTO.getStartTime());
 						int endTime2 = Integer.parseInt(teachDTO.getEndTime());
 						if(compareTime(startTime1, endTime1, startTime2, endTime2)) {
-							if(compareProf(rs.getString(1), teachDTO.getProf()))
-								return false;
-							else if(compareRoom(rs.getString(2), teachDTO.getRoom()))
-								return false;
+							System.out.println("시간"+compareTime(startTime1, endTime1, startTime2, endTime2));
+							System.out.println(rs.getString(1) + "teacher"+teachDTO.getProf());
+							if(rs.getString(1).equals(teachDTO.getProf())) {
+								return rs.getInt(8)*10 + rs.getInt(9);
+							}
+							else if(rs.getString(2).equals(teachDTO.getRoom())) {
+								return rs.getInt(8)*10 + rs.getInt(9);
+							}
 						}
 					}
 					
@@ -255,7 +267,7 @@ public class TeachDAO {
 				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
 			}
 			
-		return true;
+		return 1;
 	}
 
 	//insertionTeach에서 write시 courseName만으로 정보를 가져와 courseNo를 반환해 생성자 사용
@@ -312,8 +324,6 @@ public class TeachDAO {
 	
 	//요일비교
 	public static boolean compareDay(String day1, String day2) {
-		System.out.println(day1);
-		System.out.println(day2);
 		for(int i=0;i<day1.length();i++) {
 			for(int j=0;j<day2.length();j++) {
 				if(day1.charAt(i) == day2.charAt(j)) {
@@ -329,19 +339,7 @@ public class TeachDAO {
 			return false;
 		return true;
 	}
-	//교수비교
-	public static boolean compareProf(String prof1, String prof2) {
-		if(prof2.equals(prof1))
-			return false;
-		return true;
-	}
-	//장소비교
-		public static boolean compareRoom(String room1, String room2) {
-			if(room2.equals(room1))
-				return false;
-			return true;
-		}
-	
+
 	//분반 삭제
 	public int delete(String courseNo, String classNo, String year, String semester) {
 		String SQL = "DELETE FROM teach WHERE courseNo = ? AND classNo = ? AND year = ? AND semester = ?";

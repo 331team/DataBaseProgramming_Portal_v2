@@ -197,25 +197,7 @@
 				</div>
 				<div class="modal-body">
 					<form action="./insertionTeachAction.jsp" method="post">
-						<div class="form-row">
-							<div class="form-group col-sm-6">
-								<label>주관 학과</label>
-								<select name="major" class="form-control">
-									<option value="컴퓨터과학전공" selected>컴퓨터과학전공</option>
-									<option value="소프트웨어학부">소프트웨어학부</option>
-									<option value="경영학부">경영학부</option>
-									<option value="겨울학기">겨울학기</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-6">
-								<label>강의 구분</label>
-								<select name="category" class="form-control">
-									<option value="전공필수">전공필수</option>
-									<option value="전공선택">전공선택</option>
-									<option value="교양">교양</option>
-								</select>
-							</div>
-						</div>
+						
 						<div class="form-row">
 							<div class="form-group col-sm-6">
 							<label>강의명</label>
