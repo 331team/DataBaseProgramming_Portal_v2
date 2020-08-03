@@ -186,12 +186,11 @@ public class TeachDAO {
 	
 	//수정하기
 	public int modify(TeachDTO teachDTO) {
-		String SQL = "UPDATE TEACH SET prof = ?, room = ?, day = ? classNo = ?, startTime = ?, endTime = ?, num = ? WHERE year = ? AND semester = ? AND classNo = ?";
+		String SQL = "UPDATE TEACH SET prof = ?, room = ?, day = ?, startTime = ?, endTime = ?, num = ? WHERE courseNo = ? AND year = ? AND semester = ? AND classNo = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int classNo = classNoCheck(teachDTO.getCourseNo(), teachDTO.getYear(), teachDTO.getSemester());
-		
+		System.out.println("modify:"+teachDTO.classNo);
 		if(check(teachDTO)) {
 			try {
 				conn = DatabaseUtil.getConnection();
@@ -199,14 +198,13 @@ public class TeachDAO {
 				pstmt.setString(1, teachDTO.getProf());
 				pstmt.setString(2, teachDTO.getRoom());
 				pstmt.setString(3, teachDTO.getDay());
-				pstmt.setInt(4, classNo);
-				pstmt.setString(5, teachDTO.getStartTime());
-				pstmt.setString(6, teachDTO.getEndTime());
-				pstmt.setInt(7, teachDTO.getNum());
-				pstmt.setInt(8, teachDTO.getCourseNo());
-				pstmt.setInt(9, teachDTO.getYear());
-				pstmt.setInt(10, teachDTO.getSemester());
-				pstmt.setInt(11, teachDTO.getClassNo());
+				pstmt.setString(4, teachDTO.getStartTime());
+				pstmt.setString(5, teachDTO.getEndTime());
+				pstmt.setInt(6, teachDTO.getNum());
+				pstmt.setInt(7, teachDTO.getCourseNo());
+				pstmt.setInt(8, teachDTO.getYear());
+				pstmt.setInt(9, teachDTO.getSemester());
+				pstmt.setInt(10, teachDTO.getClassNo());
 				return pstmt.executeUpdate(); //
 			} catch (Exception e) {
 				e.printStackTrace();

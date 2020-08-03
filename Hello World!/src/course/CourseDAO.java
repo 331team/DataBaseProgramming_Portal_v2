@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import evaluation.EvaluationDTO;
+import teach.TeachDTO;
 import user.UserDTO;
 import util.DatabaseUtil;
 
@@ -56,6 +57,7 @@ public class CourseDAO {
 		
 		return enrolledList;
 	}
+	
 	public ArrayList<CourseDTO> getCourse(int year, int semester){
 		ArrayList<CourseDTO> enrolledList = null;
 		String SQL = "SELECT * FROM Teach NATURAL JOIN Course WHERE AND Enroll.year = ? AND Enroll.semester = ?";
@@ -83,7 +85,7 @@ public class CourseDAO {
 		
 		return enrolledList;
 	}
-	
+	//관리자 시점 강의 리스트
 	public ArrayList<CourseDTO> getList(String category, String major, String search, int pageNumber){
 		if(category.equals("전체")) {
 			category = "";
@@ -127,13 +129,46 @@ public class CourseDAO {
 			
 		return courseList; // 실패하면 null값이 들어가 있을 것
 	}
+	//강의 게시글 가져오기
+	public CourseDTO viewCourse(int courseNo){
+		String SQL = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+			try {
+				SQL = "SELECT * FROM Course WHERE courseNo = ?";
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, courseNo);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					CourseDTO course = new CourseDTO(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getInt(3),
+							rs.getInt(4),
+							rs.getInt(5),
+							rs.getString(6),
+							rs.getInt(7));
+					return course;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
+			
+		return null;
+	}
 	
 	public int write(CourseDTO courseDTO) {
 		String SQL = "INSERT INTO COURSE VALUES (?, ?, ?, ?, ?, ?, NULL)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		if(check(courseDTO.getCourseName())) {
+		if(check(courseDTO.getCourseName()) == 0) {
 			try {
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -164,7 +199,8 @@ public class CourseDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		if(check(courseDTO.getCourseName())) {
+		int checkNum = check(courseDTO.getCourseName());
+		if(checkNum == 0 || checkNum == courseDTO.courseNo) {
 			try {
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -396,8 +432,8 @@ public class CourseDAO {
 		return courseList;
 	}
 	
-	public static boolean check(String courseName) {
-		String SQL = "SELECT courseName FROM course WHERE courseName = ?";
+	public static int check(String courseName) {
+		String SQL = "SELECT courseName, courseNo FROM course WHERE courseName = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -410,12 +446,12 @@ public class CourseDAO {
 			
 			while(rs.next()) {
 				if(rs.getString(1) != null) {
-					return false;
+					return rs.getInt(2);
 				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		};
-		return true;
+		return 0;
 	}
 }

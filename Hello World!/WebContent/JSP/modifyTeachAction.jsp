@@ -32,15 +32,16 @@
 	int semester = -1;
 	int num = -1;
 	String courseName = null;
+	int classNo = -1;
 	
 	if(request.getParameter("prof") != null) {
 		prof = request.getParameter("prof");
-		System.out.println("prof");
+		System.out.println(prof);
 	}
 	
 	if(request.getParameter("room") != null) {
 		room = request.getParameter("room");
-		System.out.println("room");
+		System.out.println(room);
 	}
 	
 	if(request.getParameterValues("class_day") != null) {
@@ -71,7 +72,7 @@
 			else
 				class_day = class_day + day;
 		}
-		System.out.println("day");
+		System.out.println(class_day);
 	}
 
 	if(request.getParameter("class_st_h") != null &&
@@ -79,7 +80,7 @@
 		String start_h = request.getParameter("class_st_h");
 		String start_m = request.getParameter("class_st_m");
 		startTime = start_h + start_m;
-		System.out.println("startTime");
+		System.out.println(startTime);
 	}
 	
 	if(request.getParameter("class_end_h") != null &&
@@ -87,7 +88,7 @@
 		String end_h = request.getParameter("class_end_h");
 		String end_m = request.getParameter("class_end_m");
 		endTime = end_h + end_m;
-		System.out.println("endTime");
+		System.out.println(endTime);
 	}
 	
 	if(request.getParameter("courseName") != null) {
@@ -96,35 +97,41 @@
 	}
 
 	if(request.getParameter("year") != null) {
-		System.out.println("year");
 		try {
 			year = Integer.parseInt(request.getParameter("year"));
 		} catch(Exception e){
-			System.out.println("학점 데이터 오류");
+			System.out.println("연도 데이터 오류");
 		}
-		
+		System.out.println(year);
 	}
 	
 	if(request.getParameter("semester") != null) {
-		System.out.println("semester");
+		
 		try {
 			semester = Integer.parseInt(request.getParameter("semester"));
 		} catch(Exception e){
-			System.out.println("PF 데이터 오류");
+			System.out.println("학기 데이터 오류");
 		}
-		
+		System.out.println(semester);
 	}
 	
 	if(request.getParameter("num") != null) {
-		System.out.println("num");
 		try {
 			num = Integer.parseInt(request.getParameter("num"));
 		} catch(Exception e){
-			System.out.println("사이버 데이터 오류");
+			System.out.println("인원 수 데이터 오류");
 		}
-		
+		System.out.println(num);
 	}
 	
+	if(request.getParameter("classNo") != null) {
+		try {
+			classNo = Integer.parseInt(request.getParameter("classNo"));
+		} catch(Exception e){
+			System.out.println("분반 번호 데이터 오류");
+		}
+		System.out.println(classNo);
+	}
 
 	if (courseName == null || prof == null || class_day == null || 
 			startTime == null || endTime == null || year == -1 ||
@@ -139,11 +146,11 @@
 	}  else {
 		TeachDAO teachDAO = new TeachDAO();
 		int courseNo = teachDAO.getCourseInfo(courseName);
-		int result = teachDAO.write(new TeachDTO(prof, room, class_day, startTime, endTime, year, semester, courseNo, 0, num));
+		int result = teachDAO.modify(new TeachDTO(prof, room, class_day, startTime, endTime, year, semester, courseNo, classNo, num));
 		if (result == -1) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('분반 등록 실패');");
+			script.println("alert('분반 수정 실패');");
 			script.println("history.back();");
 			script.println("</script>");
 			script.close();
@@ -151,7 +158,7 @@
 		else if(result == -2){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('중복 강의 등록');");
+			script.println("alert('중복 강의 존재');");
 			script.println("history.back();");
 			script.println("</script>");
 			script.close();

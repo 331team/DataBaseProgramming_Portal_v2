@@ -92,6 +92,7 @@
 		
 	}
 	TeachDTO teach = new TeachDAO().getTeach(courseNo, semester, year, classNo);
+	System.out.println("modifyteach:"+classNo);
 	String day = teach.getDay();
 	String startTime = teach.getStartTime();
 	String class_st_h = startTime.substring(0,2);
@@ -105,7 +106,7 @@
 <body>
 	<section class="container mt-3" style="max-width:560px;">
     	<div class="row">
-    		<form action="./modifyTeachAction.jsp?courseName=<%= teach.getCourseName() %>" method="post">
+    		<form action="./modifyTeachAction.jsp?courseName=<%= teach.getCourseName() %>&semester=<%=semester %>&year=<%=year %>&classNo=<%=classNo %>" method="post">
     			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
     				<thead>
     					<tr>
@@ -149,9 +150,9 @@
        				    	<td style="width: 20%">장소</td>
     						<td colspan="2">
 								<select name="room" class="form-control" id = "room">
-									<option value="명신관" <%if (teach.getRoom().equals("명신관")) %> selected>명신관</option>
-									<option value="순헌관" <%if (teach.getRoom().equals("순헌관")) %> selected>순헌관</option>
-									<option value="과학관" <%if (teach.getRoom().equals("과학관")) %> selected>과학관</option>
+									<option value="명신관" <%if (teach.getRoom().equals("명신관")) {%> selected<%} %>>명신관</option>
+									<option value="순헌관" <%if (teach.getRoom().equals("순헌관")) {%> selected<%} %>>순헌관</option>
+									<option value="과학관" <%if (teach.getRoom().equals("과학관")) {%> selected<%} %>>과학관</option>
 								</select>
 							</td>
 						</tr>
@@ -173,24 +174,11 @@
 						</tr>
 						<tr>
 							<td style="width: 20%">연도</td>
-    						<td colspan="2">
-								<select name="year" class="form-control">
-									<%for(int i=2011; i< 2022; i++){ %>
-									<option value="<%=i%>" <%if(i == year) %> selected><%=i%></option>
-									<%} %>
-								</select>
-							</td>
+    						<td colspan="2"><%= year %></td>
 						</tr>
 						<tr>
 							<td style="width: 20%">학기</td>
-    						<td colspan="2">
-								<select name="semester" class="form-control">
-									<option value="1" <%if (semester == 1) %> selected>1학기</option>
-									<option value="2" <%if (semester == 2) %> selected>여름학기</option>
-									<option value="3" <%if (semester == 3) %> selected>2학기</option>
-									<option value="4" <%if (semester == 4) %> selected>겨울학기</option>
-								</select>
-							</td>
+    						<td colspan="2"><%= semester %></td>
 						</tr>
 						<tr>
 							<td style="width: 20%">인원</td>
