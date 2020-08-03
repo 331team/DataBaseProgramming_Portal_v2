@@ -112,20 +112,20 @@
 						<td><%= course.getCredit() %></td>
 						<td>
 							<%if(course.getCyber() == 1) { %>
-								<input type="checkbox" name="cyber" value="online" checked="checked" disabled="disabled"/>
+								<input type="checkbox" name="PF" value="online" checked="checked" disabled="disabled"/>
 							<% } else { %>
-								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
+								<input type="checkbox" name="PF" value="offline" disabled="disabled"/>
 							<% } %>
 						</td>
 						<td>
-							<%if(courseList.get(i).getPF() == 1) { %>
+							<%if(course.getPF() == 1) { %>
 								<input type="checkbox" name="cyber" value="online" checked="checked" disabled="disabled"/>
 								<% } else { %>
 								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
 							<% } %>
 						</td>
 						<td>
-							<a class="btn btn-primary mx-1 mt-2" onClick="showPopup(this)">수정</a>
+							<a href="./viewCourse.jsp?courseNo=<%=course.getCourseNo()%>">조회</a>
 						</td>
 						<td>
 							<a onclick="return confirm('삭제하시겠습니까?')" href="./courseDeleteAction.jsp?courseNo=<%=course.getCourseNo()%>">삭제</a>

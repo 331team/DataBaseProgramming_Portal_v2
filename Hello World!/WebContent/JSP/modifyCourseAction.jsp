@@ -117,9 +117,7 @@
 			session.setAttribute("usrID", usrID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('강의 수정 완료');");
-			script.println("window.opener.location.reload();");
-			script.println("window.close();");
+			script.println("location.href = 'insertionCourse.jsp';");
 			script.println("</script>");
 			script.close();
 		}

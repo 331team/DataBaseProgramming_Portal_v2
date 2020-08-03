@@ -104,6 +104,7 @@
 %>
 
 <body>
+	<%@ include file="./top.jsp" %>
 	<section class="container mt-3" style="max-width:560px;">
     	<div class="row">
     		<form action="./modifyTeachAction.jsp?courseName=<%= teach.getCourseName() %>&semester=<%=semester %>&year=<%=year %>&classNo=<%=classNo %>" method="post">
