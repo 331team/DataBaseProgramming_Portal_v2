@@ -104,12 +104,12 @@ public class TeachDAO {
 	*/
 	//분반 추가
 	public int write(TeachDTO teachDTO) {
-		String SQL = "INSERT INTO TEACH VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO Teach VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int classNo = classNoCheck(teachDTO.getCourseNo());
-		if(check(teachDTO)) {
+		int classNo = classNoCheck(teachDTO.getCourseNo(), teachDTO.getYear(), teachDTO.getSemester());
+		if(check(teachDTO) == 1) {
 			try {
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -136,28 +136,36 @@ public class TeachDAO {
 		}
 		return -1; 
 	}
-	private boolean check(TeachDTO teachDTO) {
+	//요일, 시간, 분반, 교수 중복 확인
+	private int check(TeachDTO teachDTO) {
 		// TODO Auto-generated method stub
 		String SQL = "";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 			try {
-				SQL = "SELECT * FROM Teach";
+				SQL = "SELECT * FROM Teach WHERE year = ? AND semester = ?";
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, teachDTO.getYear());
+				pstmt.setInt(2, teachDTO.getSemester());
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					if(compareDay(rs.getString(3), teachDTO.getDay())) {
+						System.out.println("요일"+compareDay(rs.getString(3), teachDTO.getDay()));
 						int startTime1 = Integer.parseInt(rs.getString(4));
 						int endTime1 = Integer.parseInt(rs.getString(5));
 						int startTime2 = Integer.parseInt(teachDTO.getStartTime());
 						int endTime2 = Integer.parseInt(teachDTO.getEndTime());
 						if(compareTime(startTime1, endTime1, startTime2, endTime2)) {
-							if(compareProf(rs.getString(1), teachDTO.getProf()))
-								return false;
-							else if(compareRoom(rs.getString(2), teachDTO.getRoom()))
-								return false;
+							System.out.println("시간"+compareTime(startTime1, endTime1, startTime2, endTime2));
+							System.out.println(rs.getString(1) + "teacher"+teachDTO.getProf());
+							if(rs.getString(1).equals(teachDTO.getProf())) {
+								return rs.getInt(8)*10 + rs.getInt(9);
+							}
+							else if(rs.getString(2).equals(teachDTO.getRoom())) {
+								return rs.getInt(8)*10 + rs.getInt(9);
+							}
 						}
 					}
 					
@@ -170,7 +178,7 @@ public class TeachDAO {
 				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
 			}
 			
-		return true;
+		return 1;
 	}
 
 	//insertionTeach에서 write시 courseName만으로 정보를 가져와 courseNo를 반환해 생성자 사용
@@ -202,7 +210,7 @@ public class TeachDAO {
 	}
 	//분반 번호
 	public static int classNoCheck(int courseNo) {
-		String SQL = "SELECT max(classNo) FROM teach WHERE courseNo = ?";
+		String SQL = "SELECT max(classNo) FROM Teach WHERE courseNo = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -257,7 +265,7 @@ public class TeachDAO {
 	
 	//분반 삭제
 	public int delete(String courseNo, String classNo, String year, String semester) {
-		String SQL = "DELETE FROM teach WHERE courseNo = ? AND classNo = ? AND year = ? AND semester = ?";
+		String SQL = "DELETE FROM Teach WHERE courseNo = ? AND classNo = ? AND year = ? AND semester = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		System.out.println(courseNo + " " + classNo + " " + year + " " + semester);
@@ -281,4 +289,114 @@ public class TeachDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
+	
+	//게시글 가져오기
+		public TeachDTO getTeach(int courseNo, int semester, int year, int classNo){
+			String SQL = "";
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+				try {
+					SQL = "SELECT * FROM Teach NATURAL JOIN Course WHERE courseNo = ? AND semester = ? AND year = ? AND classNo = ?";
+					conn = DatabaseUtil.getConnection();
+					pstmt = conn.prepareStatement(SQL);
+					pstmt.setInt(1, courseNo);
+					pstmt.setInt(2, semester);
+					pstmt.setInt(3, year);
+					pstmt.setInt(4, classNo);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						TeachDTO teach = new TeachDTO(
+								rs.getInt(1),
+								rs.getString(2),
+								rs.getString(3),
+								rs.getString(4),
+								rs.getString(5),
+								rs.getString(6),
+								rs.getInt(7),
+								rs.getInt(8),
+								rs.getInt(9),
+								rs.getInt(10),
+								rs.getString(11),
+								rs.getString(12),
+								rs.getInt(13),
+								rs.getInt(14),
+								rs.getInt(15),
+								rs.getString(16));
+						return teach;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+					try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+					try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+				}
+				
+			return null;
+		}
+		//수정하기
+		public int modify(TeachDTO teachDTO) {
+			String SQL = "UPDATE Teach SET prof = ?, room = ?, day = ?, startTime = ?, endTime = ?, num = ? WHERE courseNo = ? AND year = ? AND semester = ? AND classNo = ?";
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			System.out.println("modify:"+teachDTO.classNo);
+			int checkNum = check(teachDTO);
+			if(checkNum == 1 || checkNum == (teachDTO.courseNo * 10 + teachDTO.classNo)) {
+				try {
+					conn = DatabaseUtil.getConnection();
+					pstmt = conn.prepareStatement(SQL);
+					pstmt.setString(1, teachDTO.getProf());
+					pstmt.setString(2, teachDTO.getRoom());
+					pstmt.setString(3, teachDTO.getDay());
+					pstmt.setString(4, teachDTO.getStartTime());
+					pstmt.setString(5, teachDTO.getEndTime());
+					pstmt.setInt(6, teachDTO.getNum());
+					pstmt.setInt(7, teachDTO.getCourseNo());
+					pstmt.setInt(8, teachDTO.getYear());
+					pstmt.setInt(9, teachDTO.getSemester());
+					pstmt.setInt(10, teachDTO.getClassNo());
+					return pstmt.executeUpdate(); //
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+					try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+					try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+				}
+			} else {
+				if(check(teachDTO) == -1)
+					System.out.println("교수");
+				else if(check(teachDTO) == -2)
+					System.out.println("장소");
+				else
+					System.out.println(check(teachDTO));
+				return -2; // 중복
+			}
+			return -1; 
+		}
+		//분반 번호 확인
+		public static int classNoCheck(int courseNo, int year, int semester) {
+			String SQL = "SELECT max(classNo) FROM Teach WHERE courseNo = ? AND year = ? AND semester = ?";
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, courseNo);
+				pstmt.setInt(2, year);
+				pstmt.setInt(3, semester);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					return rs.getInt(1) + 1;
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			};
+			return 1;
+		}
 }

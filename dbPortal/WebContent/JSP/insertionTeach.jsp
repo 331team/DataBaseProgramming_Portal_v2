@@ -77,6 +77,8 @@
 				<thead>
 					<tr>
 						<th style="background-color: #eeeeee; text-align: center;">과목코드</th>
+						<th style="background-color: #eeeeee; text-align: center;">연도</th>
+						<th style="background-color: #eeeeee; text-align: center;">학기</th>
 						<th style="background-color: #eeeeee; text-align: center;">분반</th>
 						<th style="background-color: #eeeeee; text-align: center;">과목명</th>
 						<th style="background-color: #eeeeee; text-align: center;">학점</th>
@@ -86,6 +88,7 @@
 						<th style="background-color: #eeeeee; text-align: center;">교수명</th>
 						<th style="background-color: #eeeeee; text-align: center;">사이버</th>
 						<th style="background-color: #eeeeee; text-align: center;">P/F</th>
+						<th style="background-color: #eeeeee; text-align: center;">조회</th>
 						<th style="background-color: #eeeeee; text-align: center;">삭제</th>
 					</tr>
 				</thead>
@@ -104,6 +107,16 @@
 					%>
 					<tr>
 						<td><%=teach.getCourseNo() %></td>
+						<td><%=teach.getYear() %></td>
+						<%if(teach.getSemester() == 1){%>
+							<td>1학기</td>
+						<%;} else if(teach.getSemester() == 2){%>
+							<td>여름학기</td>
+						<%;}else if(teach.getSemester() == 3){%>
+							<td>2학기</td>
+						<%;}else if(teach.getSemester() == 4){%>
+							<td>겨울학기</td>
+						<%;} %>
 						<td><%=teach.getClassNo() %></td>
 						<td><%=teach.getCourseName() %></td>
 						<td><%=teach.getCredit() %></td>
@@ -124,6 +137,10 @@
 								<% } else { %>
 								<input type="checkbox" name="cyber" value="offline" disabled="disabled"/>
 							<% } %>
+						</td>
+						<td>
+							<a href="./viewTeach.jsp?courseNo=<%=teach.getCourseNo()%>&
+								classNo=<%=teach.getClassNo()%>&year=<%=teach.getYear()%>&semester=<%=teach.getSemester()%>">조회</a>
 						</td>
 						<td>
 							<a onclick="return confirm('삭제하시겠습니까?')" href="./teachDeleteAction.jsp?courseNo=<%=teach.getCourseNo()%>&
@@ -169,15 +186,6 @@
 	</ul>	
 			
 		</div>
-		<div class="mt-2">
-			<form action="uploadCSV.jsp" method="post" enctype="multipart/form-data">
-				파일: <input type="file" name="upload"/>
-				<input type="submit" />
-			</form>
-			<div class="mt-1">
-				<a href="downloadCSV.jsp">양식 다운받기</a>
-			</div>
-		</div>
 		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
     	<div class="modal-dialog">
     		<div class="modal-content">
@@ -189,25 +197,7 @@
 				</div>
 				<div class="modal-body">
 					<form action="./insertionTeachAction.jsp" method="post">
-						<div class="form-row">
-							<div class="form-group col-sm-6">
-								<label>주관 학과</label>
-								<select name="major" class="form-control">
-									<option value="컴퓨터과학전공" selected>컴퓨터과학전공</option>
-									<option value="소프트웨어학부">소프트웨어학부</option>
-									<option value="경영학부">경영학부</option>
-									<option value="겨울학기">겨울학기</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-6">
-								<label>강의 구분</label>
-								<select name="category" class="form-control">
-									<option value="전공필수">전공필수</option>
-									<option value="전공선택">전공선택</option>
-									<option value="교양">교양</option>
-								</select>
-							</div>
-						</div>
+						
 						<div class="form-row">
 							<div class="form-group col-sm-6">
 							<label>강의명</label>

@@ -102,15 +102,5 @@ INSERT INTO Teach VALUES ('최자령', '명신 314', '월수', '0910', '1005', 2
 SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course INNER JOIN UserInfo WHERE UserInfo.usrID = Teach.prof AND Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1 
 INSERT INTO Enroll VALUES (2020, 1, 204860, 1, '1715437');
 
-SELECT * FROM Enroll;
-SELECT * FROM UserInfo;
-SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.PF = 1
-SELECT * FROM Enroll NATURAL JOIN Teach NATURAL JOIN Course WHERE Enroll.studentID = '1715437' AND Enroll.year = 2020 AND Enroll.semester = 1
-SELECT * FROM Teach NATURAL JOIN Course WHERE Teach.year = 2020 AND Teach.semester = 1 AND Course.category LIKE '전공%'
-
-SELECT * FROM Course LIMIT 10
-SELECT * FROM Teach;
-DELETE FROM Teach;
-
 INSERT INTO UserInfo VALUES (0, '컴퓨터과학전공', '이현자', '0000', '17123', 'csssr1207@gmail.com', 'a', false);
 

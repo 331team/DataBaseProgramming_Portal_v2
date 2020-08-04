@@ -366,11 +366,11 @@ public class CourseDAO {
 	}
 	
 	public int write(CourseDTO courseDTO) {
-		String SQL = "INSERT INTO Course VALUES (?, ?, ?, ?, ?, ?, NULL)";
+		String SQL = "INSERT INTO COURSE VALUES (?, ?, ?, ?, ?, ?, NULL)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		if(check(courseDTO.getCourseName())) {
+		if(check(courseDTO.getCourseName()) == 0) {
 			try {
 				conn = DatabaseUtil.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -487,8 +487,8 @@ public class CourseDAO {
 		return -1;
 	}
 	
-	public static boolean check(String courseName) {
-		String SQL = "SELECT courseName FROM Course WHERE courseName = ?";
+	public static int check(String courseName) {
+		String SQL = "SELECT courseName, courseNo FROM course WHERE courseName = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -501,14 +501,47 @@ public class CourseDAO {
 			
 			while(rs.next()) {
 				if(rs.getString(1) != null) {
-					return false;
+					return rs.getInt(2);
 				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		};
-		return true;
+		return 0;
 	}
+	
+	//수정하기
+	public int modify(CourseDTO courseDTO) {
+		String SQL = "UPDATE Course SET category = ?, major = ?, credit = ?, cyber = ?,PF = ?, courseName = ? WHERE courseNo = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int checkNum = check(courseDTO.getCourseName());
+		if(checkNum == 0 || checkNum == courseDTO.courseNo) {
+			try {
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, courseDTO.getCategory());
+				pstmt.setString(2, courseDTO.getMajor());
+				pstmt.setInt(3, courseDTO.getCredit());
+				pstmt.setInt(4, courseDTO.getCyber());
+				pstmt.setInt(5, courseDTO.getPF());
+				pstmt.setString(6, courseDTO.getCourseName());
+				pstmt.setInt(7, courseDTO.getCourseNo());
+				return pstmt.executeUpdate(); //
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
+		}
+		else
+			return -2;
+		return -1; 
+	}
+		
 	public int delete(String courseNo) {
 		String SQL = "DELETE FROM Course WHERE courseNo = ?";
 		Connection conn = null;
@@ -531,4 +564,39 @@ public class CourseDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
+	
+	//강의 게시글 가져오기
+	public CourseDTO viewCourse(int courseNo){
+		String SQL = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+			try {
+				SQL = "SELECT * FROM Course WHERE courseNo = ?";
+				conn = DatabaseUtil.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, courseNo);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					CourseDTO course = new CourseDTO(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getInt(3),
+							rs.getInt(4),
+							rs.getInt(5),
+							rs.getString(6),
+							rs.getInt(7));
+					return course;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try{if(conn != null) conn.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(pstmt != null) pstmt.close();} catch(Exception e) {e.printStackTrace();}
+				try{if(rs != null) rs.close();} catch(Exception e) {e.printStackTrace();}
+			}
+			
+		return null;
+	}
+	
 }
